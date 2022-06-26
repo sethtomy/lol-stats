@@ -5,6 +5,7 @@ import { RiotModule } from '../riot/riot.module';
 
 @Module({
   imports: [RiotModule],
+  exports: [MatchService],
   controllers: [MatchController],
   providers: [MatchService],
 })

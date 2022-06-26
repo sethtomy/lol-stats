@@ -2,20 +2,23 @@ import { Injectable } from '@nestjs/common';
 import RiotClient from '../riot/RiotClient';
 import { PlatformId } from '@fightmegg/riot-rate-limiter';
 import { RiotAPITypes } from '@fightmegg/riot-api';
-import { DateTime } from 'luxon';
+import { DateTime, DateTimeUnit } from 'luxon';
 import MatchType = RiotAPITypes.MatchV5.MatchType;
 
 @Injectable()
+// todo: allow more regions
 export class MatchService {
   DEFAULT_COUNT = 100;
 
   constructor(private riotClient: RiotClient) {}
 
-  public async getBySummoner(puuid: string) {
-    // todo: Remove hardcoded dates
-    const start = DateTime.local().startOf('week').toSeconds();
-    console.log(start);
-    // todo: allow more regions
+  // todo: add support for paging
+  public async getByPuuid(
+    puuid: string,
+    period: DateTimeUnit,
+  ): Promise<string[]> {
+    // todo: add endTime?
+    const start = DateTime.local().startOf(period).toSeconds();
     return this.riotClient.matchV5.getIdsbyPuuid({
       cluster: PlatformId.AMERICAS,
       puuid,
@@ -27,6 +30,15 @@ export class MatchService {
         // @ts-ignore
         startTime: start,
       },
+    });
+  }
+
+  public async getById(
+    matchId: string,
+  ): Promise<RiotAPITypes.MatchV5.MatchDTO> {
+    return this.riotClient.matchV5.getMatchById({
+      cluster: PlatformId.AMERICAS,
+      matchId,
     });
   }
 }
