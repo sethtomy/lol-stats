@@ -1,16 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { MatchService } from '../match/match.service';
-import { SummonerService } from '../summoner/summoner.service';
+import { MatchService } from '../../riot-api/match/match.service';
+import { SummonerService } from '../../riot-api/summoner/summoner.service';
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import SummonerReportDto from './models/summoner-report.dto';
 import { DateTimeUnit } from 'luxon';
+import AbstractReportService from '../domain/AbstractReportService';
+import { ChampionReportService } from '../domain/champion-report/champion-report.service';
 
 @Injectable()
-export class SummonerReportService {
+export class SummonerReportService extends AbstractReportService {
   constructor(
     private readonly matchService: MatchService,
     private readonly summonerService: SummonerService,
-  ) {}
+    private readonly championReportService: ChampionReportService,
+  ) {
+    super();
+  }
 
   public async getSummonerReportByPeriod(
     summonerName: string,
@@ -19,11 +24,16 @@ export class SummonerReportService {
     const { puuid } = await this.summonerService.getByName(summonerName);
     // todo: remove hardcoded period
     const matchIds = await this.matchService.getByPuuid(puuid, period);
-    const matches = await this.getAllMatchesFilterParticipant(puuid, matchIds);
-    const wins = SummonerReportService.getTotalWins(matches);
+    const participantDTOS = await this.getAllMatchesFilterParticipant(
+      puuid,
+      matchIds,
+    );
+    const wins = AbstractReportService.getTotalWins(participantDTOS);
     return new SummonerReportDto({
       wins,
       totalGames: matchIds.length,
+      summonerName,
+      championReports: this.championReportService.getMany(participantDTOS),
     });
   }
 
@@ -40,17 +50,5 @@ export class SummonerReportService {
       matches.push(filtered);
     }
     return matches;
-  }
-
-  private static getTotalWins(
-    participantDtos: RiotAPITypes.MatchV5.ParticipantDTO[],
-  ): number {
-    let wins = 0;
-    participantDtos.forEach((participantDto) => {
-      if (participantDto.win) {
-        wins++;
-      }
-    });
-    return wins;
   }
 }

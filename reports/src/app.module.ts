@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
-import { SummonerModule } from './summoner/summoner.module';
-import { RiotModule } from './riot/riot.module';
-import { MatchModule } from './match/match.module';
-import { SummonerReportModule } from './summoner-report/summoner-report.module';
+import { SummonerModule } from './riot-api/summoner/summoner.module';
+import { RiotModule } from './riot-api/riot/riot.module';
+import { MatchModule } from './riot-api/match/match.module';
+import { SummonerReportModule } from './report-api/summoner-report/summoner-report.module';
+import { ChampionReportModule } from './report-api/domain/champion-report/champion-report.module';
 
 @Module({
-  imports: [SummonerModule, RiotModule, MatchModule, SummonerReportModule],
+  imports: [
+    SummonerModule,
+    RiotModule,
+    MatchModule,
+    SummonerReportModule,
+    ChampionReportModule,
+  ],
   controllers: [],
   providers: [],
 })

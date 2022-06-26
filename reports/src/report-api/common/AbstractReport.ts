@@ -1,16 +1,16 @@
-interface SummonerReportDtoOptions {
+export interface AbstractReportOptions {
   wins: number;
   totalGames: number;
 }
 
 // todo: add to-from date?
 // todo: add description to state time period
-export default class SummonerReportDto {
+export default abstract class AbstractReport {
   public winRate: string;
   public wins: number;
   public totalGames: number;
 
-  constructor(options: SummonerReportDtoOptions) {
+  protected constructor(options: AbstractReportOptions) {
     this.wins = options.wins;
     this.totalGames = options.totalGames;
     this.setWinRate();
