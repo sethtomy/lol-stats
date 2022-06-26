@@ -1,18 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { MatchService } from '../../riot-api/match/match.service';
-import { SummonerService } from '../../riot-api/summoner/summoner.service';
+import { MatchService } from '../../../riot-api/match/match.service';
+import { SummonerService } from '../../../riot-api/summoner/summoner.service';
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import SummonerReportDto from './models/summoner-report.dto';
 import { DateTimeUnit } from 'luxon';
-import AbstractReportService from '../domain/AbstractReportService';
-import { ChampionReportService } from '../domain/champion-report/champion-report.service';
+import AbstractReportService from '../../domain/AbstractReportService';
+import { ChampionReportService } from '../../domain/champion-report/champion-report.service';
+import { SummonerReportService } from '../../domain/summoner-report/summoner-report.service';
 
 @Injectable()
-export class SummonerReportService extends AbstractReportService {
+export class SummonerReportInfraService extends AbstractReportService {
   constructor(
     private readonly matchService: MatchService,
     private readonly summonerService: SummonerService,
     private readonly championReportService: ChampionReportService,
+    private readonly summonerReportService: SummonerReportService,
   ) {
     super();
   }
@@ -28,13 +30,7 @@ export class SummonerReportService extends AbstractReportService {
       puuid,
       matchIds,
     );
-    const wins = AbstractReportService.getTotalWins(participantDTOS);
-    return new SummonerReportDto({
-      wins,
-      totalGames: matchIds.length,
-      summonerName,
-      championReports: this.championReportService.getMany(participantDTOS),
-    });
+    return this.summonerReportService.get(summonerName, participantDTOS);
   }
 
   private async getAllMatchesFilterParticipant(

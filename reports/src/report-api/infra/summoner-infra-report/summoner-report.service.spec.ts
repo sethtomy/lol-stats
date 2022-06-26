@@ -1,15 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SummonerReportService } from './summoner-report.service';
+import { SummonerReportInfraService } from './summoner-report-infra.service';
 
 describe('SummonerReportService', () => {
-  let service: SummonerReportService;
+  let service: SummonerReportInfraService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SummonerReportService],
+      providers: [SummonerReportInfraService],
     }).compile();
 
-    service = module.get<SummonerReportService>(SummonerReportService);
+    service = module.get<SummonerReportInfraService>(
+      SummonerReportInfraService,
+    );
   });
 
   it('should be defined', () => {

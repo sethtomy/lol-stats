@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SummonerReportController } from './summoner-report.controller';
-import { SummonerReportService } from './summoner-report.service';
+import { SummonerReportInfraService } from './summoner-report-infra.service';
 
 describe('SummonerReportController', () => {
   let controller: SummonerReportController;
@@ -8,7 +8,7 @@ describe('SummonerReportController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SummonerReportController],
-      providers: [SummonerReportService],
+      providers: [SummonerReportInfraService],
     }).compile();
 
     controller = module.get<SummonerReportController>(SummonerReportController);

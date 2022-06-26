@@ -1,7 +1,7 @@
 import AbstractReport, {
   AbstractReportOptions,
-} from '../../common/AbstractReport';
-import ChampionReportDto from '../../domain/champion-report/champion-report.dto';
+} from '../../../common/AbstractReport';
+import ChampionReportDto from '../../../domain/champion-report/champion-report.dto';
 
 interface SummonerReportDtoOptions extends AbstractReportOptions {
   summonerName: string;
