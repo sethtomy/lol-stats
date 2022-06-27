@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserApiDto } from './dto/create-user-api.dto';
+import { UserDto } from './dto/user.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('user')
@@ -9,7 +9,7 @@ export class UserController {
   constructor(private readonly userApiService: UserService) {}
 
   @Get(':name')
-  findOne(@Param('name') name: string): CreateUserApiDto {
+  findOne(@Param('name') name: string): UserDto {
     return this.userApiService.findOne(name);
   }
 }

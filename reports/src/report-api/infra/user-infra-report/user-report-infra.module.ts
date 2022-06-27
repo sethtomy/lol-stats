@@ -3,9 +3,10 @@ import { SummonerReportInfraModule } from '../summoner-infra-report/summoner-rep
 import { UserApiModule } from '../../../user-api/user-api.module';
 import { UserReportInfraService } from './user-report-infra.service';
 import { UserReportInfraController } from './user-report-infra.controller';
+import { UserReportModule } from '../../domain/user-report/user-report.module';
 
 @Module({
-  imports: [SummonerReportInfraModule, UserApiModule],
+  imports: [SummonerReportInfraModule, UserApiModule, UserReportModule],
   providers: [UserReportInfraService],
   controllers: [UserReportInfraController],
 })

@@ -1,4 +1,4 @@
-export class CreateUserApiDto {
+export class UserDto {
   name: string;
   summoners: string[];
 

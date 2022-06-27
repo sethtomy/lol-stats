@@ -16,7 +16,7 @@ export default abstract class AbstractReport {
     this.setWinRate();
   }
 
-  private setWinRate(): void {
+  public setWinRate(): void {
     const winRate = (100 * this.wins) / this.totalGames;
     this.winRate = `${winRate.toFixed(1)}%`;
   }

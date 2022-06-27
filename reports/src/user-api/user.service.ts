@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserApiDto } from './dto/create-user-api.dto';
+import { UserDto } from './dto/user.dto';
 
 const users = {
-  Seth: new CreateUserApiDto('Seth', ['HeavensVanguard', 'BDGxHvnsVngrd']),
+  Seth: new UserDto('Seth', ['HeavensVanguard', 'BDGxHvnsVngrd']),
 };
 
 @Injectable()
 export class UserService {
-  findOne(name: string): CreateUserApiDto {
+  findOne(name: string): UserDto {
     return users[name];
   }
 }
