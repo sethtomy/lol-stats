@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Get, Injectable, NotFoundException } from '@nestjs/common';
 import { MatchService } from '../../../riot-api/match/match.service';
 import { SummonerService } from '../../../riot-api/summoner/summoner.service';
 import { RiotAPITypes } from '@fightmegg/riot-api';
@@ -7,6 +7,7 @@ import { DateTimeUnit } from 'luxon';
 import AbstractReportService from '../../domain/AbstractReportService';
 import { ChampionReportService } from '../../domain/champion-report/champion-report.service';
 import { SummonerReportService } from '../../domain/summoner-report/summoner-report.service';
+import ChampionReportDto from '../../domain/champion-report/champion-report.dto';
 
 @Injectable()
 export class SummonerReportInfraService extends AbstractReportService {
@@ -21,16 +22,40 @@ export class SummonerReportInfraService extends AbstractReportService {
 
   public async getSummonerReportByPeriod(
     summonerName: string,
-    period: DateTimeUnit,
+    timePeriod: DateTimeUnit,
   ): Promise<SummonerReportDto> {
     const { puuid } = await this.summonerService.getByName(summonerName);
-    // todo: remove hardcoded period
-    const matchIds = await this.matchService.getByPuuid(puuid, period);
+    const matchIds = await this.matchService.getByPuuid(puuid, timePeriod);
     const participantDTOS = await this.getAllMatchesFilterParticipant(
       puuid,
       matchIds,
     );
     return this.summonerReportService.get(summonerName, participantDTOS);
+  }
+
+  @Get(':summonerName/champion/:championName/time-period/:timePeriod')
+  public async getSummonerReportByPeriodAndChampion(
+    summonerName: string,
+    championName: string,
+    timePeriod: DateTimeUnit,
+  ): Promise<ChampionReportDto> {
+    const summonerReportDto = await this.getSummonerReportByPeriod(
+      summonerName,
+      timePeriod,
+    );
+    // todo: some validation on champion name
+    const championReport = summonerReportDto.championReports.find(
+      (championReport) => {
+        console.log(championReport.championName);
+        return championReport.championName === championName;
+      },
+    );
+    if (!championReport) {
+      throw new NotFoundException(
+        `Report for ${summonerName} not found in last ${timePeriod}.`,
+      );
+    }
+    return championReport;
   }
 
   private async getAllMatchesFilterParticipant(
