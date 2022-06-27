@@ -14,7 +14,6 @@ export class ChampionReportService extends AbstractReportService {
     const map = this.categorizeByChampion(participantDtos);
     const championReportDtos: ChampionReportDto[] = [];
     Object.entries(map).forEach(([championName, championParticipantDtos]) => {
-      console.log(championParticipantDtos.length);
       championReportDtos.push(
         new ChampionReportDto({
           championName,

@@ -15,5 +15,6 @@ import { SummonerReportModule } from '../../domain/summoner-report/summoner-repo
     ChampionReportModule,
     SummonerReportModule,
   ],
+  exports: [SummonerReportInfraService],
 })
 export class SummonerReportInfraModule {}
