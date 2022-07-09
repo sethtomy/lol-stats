@@ -20,9 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@angular-devkit/schematics-cli": "^14.0.5",
     "@discord-nestjs/core": "^3.5.0",
-    "@discord-nestjs/schematics": "^0.1.7",
     "@inimitable-atl/reports-client": "file:../reports-client",
     "@nestjs/common": "^8.4.7",
     "@nestjs/config": "^2.2.0",
