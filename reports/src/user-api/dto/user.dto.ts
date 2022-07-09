@@ -1,9 +1,9 @@
 export class UserDto {
-  name: string;
+  discordId: string;
   summoners: string[];
 
-  constructor(name: string, summoners: string[]) {
-    this.name = name;
+  constructor(id: string, summoners: string[]) {
+    this.discordId = id;
     this.summoners = summoners;
   }
 }

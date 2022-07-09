@@ -17,7 +17,12 @@ export default abstract class AbstractReport {
   }
 
   public setWinRate(): void {
-    const winRate = (100 * this.wins) / this.totalGames;
+    let winRate: number;
+    if (this.totalGames === 0) {
+      winRate = 0;
+    } else {
+      winRate = (100 * this.wins) / this.totalGames;
+    }
     this.winRate = `${winRate.toFixed(1)}%`;
   }
 }

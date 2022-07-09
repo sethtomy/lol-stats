@@ -21,7 +21,7 @@ export class UserReportService {
     summonerReports: SummonerReportDto[],
   ): UserReportDto {
     return new UserReportDto({
-      userName: user.name,
+      userName: user.discordId,
       summoners: user.summoners,
       wins: this.getWins(summonerReports),
       totalGames: this.getTotalGames(summonerReports),
