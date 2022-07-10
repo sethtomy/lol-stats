@@ -1,4 +1,5 @@
 export enum Champion {
-  SERAPHINE = 'Seraphine',
+  Seraphine = 'Seraphine',
   TahmKench = 'TahmKench',
+  Yasuo = 'Yasuo',
 }

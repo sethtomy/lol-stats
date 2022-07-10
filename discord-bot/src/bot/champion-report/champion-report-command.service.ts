@@ -30,15 +30,10 @@ export class ChampionReportCommand
     });
 
     const userReportApi = new UserReportApi(config);
-    let res;
-    try {
-      res = await userReportApi.userReportInfraControllerGet(
-        user.id,
-        dto.timePeriod,
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await userReportApi.userReportInfraControllerGet(
+      user.id,
+      dto.timePeriod,
+    );
 
     // todo - types!
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
