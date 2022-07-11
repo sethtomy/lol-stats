@@ -1,6 +1,5 @@
 import { Choice, Param, ParamType } from '@discord-nestjs/core';
 import { TimePeriod } from '../../common/TimePeriod';
-import { Champion } from '../../common/Champion';
 
 export class GetChampionReportDto {
   @Choice(TimePeriod)
@@ -12,7 +11,6 @@ export class GetChampionReportDto {
   })
   timePeriod;
 
-  @Choice(Champion)
   @Param({
     description: 'Champion for the report.',
     type: ParamType.STRING,
