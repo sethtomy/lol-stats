@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "gen-and-build": "./scripts/axios-codegen.sh && npm run build",
     "build": "tsc"
   },
   "keywords": [],
