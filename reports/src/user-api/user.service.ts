@@ -9,6 +9,7 @@ const users = [
     'damadbagginj3w',
     'feedthenafkff15',
   ]),
+  new UserDto('176944443331575809', ['pyramin']),
 ];
 
 @Injectable()
