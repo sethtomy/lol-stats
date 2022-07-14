@@ -3,7 +3,12 @@ import { UserDto } from './dto/user.dto';
 
 const users = [
   new UserDto('370239122222350336', ['HeavensVanguard', 'BDGxHvnsVngrd']),
-  new UserDto('193797571271983105', ['Bubbly Vibes']),
+  new UserDto('193797571271983105', ['Bubbly Vibes', 'BDGxChampizzle']),
+  new UserDto('401784222609571841', [
+    'Creamy Vibes',
+    'damadbagginj3w',
+    'feedthenafkff15',
+  ]),
 ];
 
 @Injectable()
