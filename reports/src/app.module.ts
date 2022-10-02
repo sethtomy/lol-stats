@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { RiotModule } from '../../riot-proxy/src/riot/riot.module';
-import { MatchModule } from './riot-api/match/match.module';
+import { MatchModule } from '../../riot-proxy/src/match/match.module';
 import { SummonerReportInfraModule } from './report-api/infra/summoner-infra-report/summoner-report-infra.module';
 import { ChampionReportModule } from './report-api/domain/champion-report/champion-report.module';
 import { UserApiModule } from './user-api/user-api.module';

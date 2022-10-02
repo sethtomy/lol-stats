@@ -3,7 +3,7 @@ import { MatchService } from './match.service';
 import { ApiTags } from '@nestjs/swagger';
 import { DateTimeUnit } from 'luxon';
 
-@ApiTags('match')
+@ApiTags('Match')
 @Controller('match')
 export class MatchController {
   constructor(private readonly matchService: MatchService) {}
