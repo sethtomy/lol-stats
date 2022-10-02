@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import RiotClient from '../riot/RiotClient';
+import RiotClientService from '../../../../riot-proxy/src/riot/riot-client.service';
 import { PlatformId } from '@fightmegg/riot-rate-limiter';
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import { DateTime, DateTimeUnit } from 'luxon';
@@ -10,7 +10,7 @@ import MatchType = RiotAPITypes.MatchV5.MatchType;
 export class MatchService {
   DEFAULT_COUNT = 100;
 
-  constructor(private riotClient: RiotClient) {}
+  constructor(private riotClient: RiotClientService) {}
 
   // todo: add support for paging
   public async getByPuuid(

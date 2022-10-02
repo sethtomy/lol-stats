@@ -5,7 +5,6 @@ import { RiotModule } from '../riot/riot.module';
 
 @Module({
   imports: [RiotModule],
-  exports: [SummonerService],
   controllers: [SummonerController],
   providers: [SummonerService],
 })
