@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   riot-proxy-api:
-    build: riot-proxy
+    build: riot-proxy/server
     ports:
       - '3001:3001'
     environment:

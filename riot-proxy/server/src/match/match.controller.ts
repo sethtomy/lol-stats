@@ -9,7 +9,7 @@ export class MatchController {
   constructor(private readonly matchService: MatchService) {}
 
   @Get('summoner/:puuid/time-period/:timePeriod')
-  public async getByName(
+  public async getByPuuid(
     @Param('puuid') puuid: string,
     @Param('timePeriod') timePeriod: DateTimeUnit,
   ): Promise<string[]> {

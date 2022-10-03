@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import { DateTime, DateTimeUnit } from 'luxon';
 import { RiotMatchService } from '../riot/riot-match.service';
@@ -8,6 +8,8 @@ import { RiotMatchService } from '../riot/riot-match.service';
  * @todo Allow more regions.
  */
 export class MatchService {
+  private readonly logger: Logger = new Logger(MatchService.name);
+
   constructor(private riotMatchService: RiotMatchService) {}
 
   // todo: add support for paging
@@ -17,7 +19,9 @@ export class MatchService {
   ): Promise<string[]> {
     // todo: add endTime?
     const start = DateTime.local().startOf(period).toSeconds();
-    return this.riotMatchService.getByPuuid(puuid, start);
+    const matchIds = await this.riotMatchService.getByPuuid(puuid, start);
+    this.logger.log(`Successfully got matchIds for ${puuid}`);
+    return matchIds;
   }
 
   public async getById(
