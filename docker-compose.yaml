@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+
+  riot-proxy-api:
+    build: riot-proxy
+    ports:
+      - '3001:3001'
+    environment:
+      RIOT_API_KEY: ${RIOT_API_KEY}
