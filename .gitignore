@@ -396,4 +396,11 @@ Temporary Items
 # Local
 .env
 dist
-api-client
+
+# Open API Generator
+*/api-client/.openapi-generator
+*/api-client/.npmignore
+*/api-client/.gitignore
+*/api-client/.openapi-generator-ignore
+*/api-client/git_push.sh
+

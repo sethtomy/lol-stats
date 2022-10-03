@@ -1,11 +1,11 @@
 {
-  "name": "@inimitable-atl/reports-client",
+  "name": "@sethtomy/riot-proxy-client",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "gen-and-build": "./scripts/axios-codegen.sh && npm run build",
+    "gen-and-build": "axios-codegen.sh && npm run build",
     "build": "tsc"
   },
   "keywords": [],

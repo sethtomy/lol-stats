@@ -1,7 +1,7 @@
 import { DiscordCommand, SubCommand } from '@discord-nestjs/core';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 import { Injectable } from '@nestjs/common';
-import { Configuration, UserApi } from '@inimitable-atl/reports-client';
+import { Configuration, UserApi } from '@inimitable-atl/openapi-client-generator';
 
 @SubCommand({
   name: 'get',

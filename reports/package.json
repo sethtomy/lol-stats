@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@sethtomy/riot-proxy-client": "../riot-proxy-client",
     "@fightmegg/riot-api": "0.0.8",
     "@nestjs/common": "^8.1.1",
     "@nestjs/config": "^2.1.0",

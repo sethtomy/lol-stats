@@ -7,7 +7,7 @@ import {
 } from '@discord-nestjs/core';
 import { MessageEmbed, User } from 'discord.js';
 import { Injectable } from '@nestjs/common';
-import { Configuration, UserReportApi } from '@inimitable-atl/reports-client';
+import { Configuration, UserReportApi } from '@inimitable-atl/openapi-client-generator';
 import { TransformPipe } from '@discord-nestjs/common';
 import { GetChampionReportDto } from './get-champion-report.dto';
 import { TransformedCommandExecutionContext } from '@discord-nestjs/core/dist/definitions/interfaces/transformed-command-execution-context';
