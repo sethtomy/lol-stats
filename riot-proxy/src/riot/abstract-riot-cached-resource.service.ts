@@ -1,3 +1,5 @@
+import { HttpException } from '@nestjs/common';
+
 export abstract class AbstractRiotCachedResourceService<T> {
   /**
    * @todo Replace the below with MongoDB.
@@ -27,7 +29,11 @@ export abstract class AbstractRiotCachedResourceService<T> {
       try {
         resource = await fn(...params);
       } catch (error) {
-        console.error(error);
+        /**
+         * @todo Replace this.
+         */
+        const httpError = error[Object.getOwnPropertySymbols(error)[1]];
+        throw new HttpException(httpError, httpError.status);
       }
       this.setInCache(identifier, resource);
     }
