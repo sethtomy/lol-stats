@@ -11,7 +11,7 @@ async function bootstrap() {
 
 function bootstrapOpenApi(app: INestApplication) {
   const config = new DocumentBuilder()
-    .setTitle('Riot Proxy Service')
+    .setTitle('Riot Proxy API')
     .setDescription('A proxy service for the Riot API')
     .setVersion('1.0')
     .build();
