@@ -398,9 +398,9 @@ Temporary Items
 dist
 
 # Open API Generator
-*/api-client/.openapi-generator
-*/api-client/.npmignore
-*/api-client/.gitignore
-*/api-client/.openapi-generator-ignore
-*/api-client/git_push.sh
+**/api-client/.openapi-generator
+**/api-client/.npmignore
+**/api-client/.gitignore
+**/api-client/.openapi-generator-ignore
+**/api-client/git_push.sh
 

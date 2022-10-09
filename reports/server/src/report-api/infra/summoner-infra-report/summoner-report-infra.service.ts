@@ -1,6 +1,6 @@
 import { Get, Injectable, NotFoundException } from '@nestjs/common';
-import { MatchService } from '../../../../../../riot-proxy/server/src/match/match.service';
-import { SummonerService } from '../../../../../../riot-proxy/server/src/summoner/summoner.service';
+import { MatchService } from '../../../../../../apps/riot-proxy/src/match/match.service';
+import { SummonerService } from '../../../../../../apps/riot-proxy/src/summoner/summoner.service';
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import SummonerReportDto from './models/summoner-report.dto';
 import { DateTimeUnit } from 'luxon';

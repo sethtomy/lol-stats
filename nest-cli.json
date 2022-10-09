@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/lol-stats/src",
+  "monorepo": true,
+  "root": "apps/lol-stats",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/lol-stats/tsconfig.app.json"
+  },
+  "projects": {
+    "lol-stats": {
+      "type": "application",
+      "root": "apps/lol-stats",
+      "entryFile": "main",
+      "sourceRoot": "apps/lol-stats/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/lol-stats/tsconfig.app.json"
+      }
+    },
+    "riot-proxy": {
+      "type": "application",
+      "root": "apps/riot-proxy",
+      "entryFile": "main",
+      "sourceRoot": "apps/riot-proxy/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/riot-proxy/tsconfig.app.json"
+      }
+    },
+    "user": {
+      "type": "application",
+      "root": "apps/user",
+      "entryFile": "main",
+      "sourceRoot": "apps/user/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user/tsconfig.app.json"
+      }
+    },
+    "riot-proxy-client": {
+      "type": "library",
+      "root": "libs/riot-proxy-client",
+      "entryFile": "index",
+      "sourceRoot": "libs/riot-proxy-client/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/riot-proxy-client/tsconfig.lib.json"
+      }
+    }
+  }
+}

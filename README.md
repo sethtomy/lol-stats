@@ -1,3 +1,3 @@
 # League of Legends Stats System Monorepo
 
-![](./docs/arch.png)
+![](docs/arch.png)

@@ -2,8 +2,35 @@ version: '3.8'
 services:
 
   riot-proxy-api:
-    build: riot-proxy/server
+    build:
+      context: .
+      dockerfile: apps/riot-proxy/Dockerfile
     ports:
       - '3001:3001'
     environment:
       RIOT_API_KEY: ${RIOT_API_KEY}
+
+  postgres:
+    image: postgres:14.5-alpine3.16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  user:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: apps/user/Dockerfile
+    ports:
+      - '3002:3002'
+    environment:
+      RIOT_PROXY_BASE_PATH: http://riot-proxy-api:3001
+
+volumes:
+  db:
+    driver: local
