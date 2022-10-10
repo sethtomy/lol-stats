@@ -12,6 +12,7 @@ import {
   SummonerApi,
 } from '@sethtomy/riot-proxy-client';
 import { RiotProxyConfigService } from '@sethtomy/config';
+import { HttpClientService } from '@sethtomy/http-client';
 
 @Injectable()
 export class SummonerReportInfraService extends AbstractReportService {
@@ -22,16 +23,19 @@ export class SummonerReportInfraService extends AbstractReportService {
     private readonly championReportService: ChampionReportService,
     private readonly summonerReportService: SummonerReportService,
     private readonly riotProxyConfigService: RiotProxyConfigService,
+    httpClientService: HttpClientService,
   ) {
     super();
     const config = new Configuration();
     this.summonerApi = new SummonerApi(
       config,
       riotProxyConfigService.RIOT_PROXY_BASE_PATH,
+      httpClientService.axiosInstance,
     );
     this.matchApi = new MatchApi(
       config,
       riotProxyConfigService.RIOT_PROXY_BASE_PATH,
+      httpClientService.axiosInstance,
     );
   }
 
@@ -67,7 +71,6 @@ export class SummonerReportInfraService extends AbstractReportService {
     // todo: some validation on champion name
     const championReport = summonerReportDto.championReports.find(
       (championReport) => {
-        console.log(championReport.championName);
         return championReport.championName === championName;
       },
     );

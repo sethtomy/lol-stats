@@ -4,6 +4,7 @@ import { DateTimeUnit } from 'luxon';
 import { UserReportService } from '../../domain/user-report/user-report.service';
 import { Configuration, UserApi } from '@sethtomy/user-client';
 import { UserConfigService } from '@sethtomy/config/user-config.service';
+import { HttpClientService } from '@sethtomy/http-client';
 
 @Injectable()
 export class UserReportInfraService {
@@ -13,9 +14,14 @@ export class UserReportInfraService {
     private readonly summonerReportInfraService: SummonerReportInfraService,
     private readonly userReportService: UserReportService,
     private readonly userConfigService: UserConfigService,
+    httpClientService: HttpClientService,
   ) {
     const configuration = new Configuration();
-    this.userApi = new UserApi(configuration, userConfigService.USER_BASE_PATH);
+    this.userApi = new UserApi(
+      configuration,
+      userConfigService.USER_BASE_PATH,
+      httpClientService.axiosInstance,
+    );
   }
 
   async get(userName: string, timePeriod: DateTimeUnit) {
