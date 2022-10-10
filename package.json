@@ -9,17 +9,21 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build:riot-proxy": "nest build riot-proxy",
+    "build:report": "nest build report",
     "build:user": "nest build user",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start:riot-proxy": "nest start riot-proxy",
     "start:user": "nest start user",
     "start": "nest start",
     "start:dev": "nest start --watch",
+    "start:dev:riot-proxy": "nest start riot-proxy --watch",
+    "start:dev:report": "nest start report --watch",
     "start:dev:user": "nest start user --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "start:riot-proxy:prod": "node dist/apps/riot-proxy/main.js",
     "start:user:prod": "node dist/apps/user/main.js",
+    "start:report:prod": "node dist/apps/report/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -93,7 +97,10 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@sethtomy/riot-proxy-client(|/.*)$": "<rootDir>/libs/riot-proxy-client/src/$1"
+      "^@sethtomy/riot-proxy-client(|/.*)$": "<rootDir>/libs/riot-proxy-client/src/$1",
+      "^@sethtomy/config(|/.*)$": "<rootDir>/libs/config/src/$1",
+      "^@sethtomy/user-client(|/.*)$": "<rootDir>/libs/user-client/src/$1",
+      "^@sethtomy/http-client(|/.*)$": "<rootDir>/libs/http-client/src/$1"
     }
   }
 }

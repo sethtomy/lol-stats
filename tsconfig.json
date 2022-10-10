@@ -23,6 +23,24 @@
       ],
       "@sethtomy/riot-proxy-client/*": [
         "libs/riot-proxy-client/src/*"
+      ],
+      "@sethtomy/config": [
+        "libs/config/src"
+      ],
+      "@sethtomy/config/*": [
+        "libs/config/src/*"
+      ],
+      "@sethtomy/user-client": [
+        "libs/user-client/src"
+      ],
+      "@sethtomy/user-client/*": [
+        "libs/user-client/src/*"
+      ],
+      "@sethtomy/http-client": [
+        "libs/http-client/src"
+      ],
+      "@sethtomy/http-client/*": [
+        "libs/http-client/src/*"
       ]
     }
   }

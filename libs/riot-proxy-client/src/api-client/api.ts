@@ -21,6 +21,791 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
+/**
+ * 
+ * @export
+ * @interface MatchDto
+ */
+export interface MatchDto {
+    /**
+     * 
+     * @type {MetadataDto}
+     * @memberof MatchDto
+     */
+    'metadata': MetadataDto;
+    /**
+     * 
+     * @type {MatchInfoDto}
+     * @memberof MatchDto
+     */
+    'info': MatchInfoDto;
+}
+/**
+ * 
+ * @export
+ * @interface MatchInfoDto
+ */
+export interface MatchInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof MatchInfoDto
+     */
+    'gameCreation': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MatchInfoDto
+     */
+    'gameDuration': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MatchInfoDto
+     */
+    'gameId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchInfoDto
+     */
+    'gameMode': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchInfoDto
+     */
+    'gameName': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MatchInfoDto
+     */
+    'gameStartTimestamp': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchInfoDto
+     */
+    'gameType': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchInfoDto
+     */
+    'gameVersion': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MatchInfoDto
+     */
+    'mapId': number;
+    /**
+     * 
+     * @type {Array<ParticipantDto>}
+     * @memberof MatchInfoDto
+     */
+    'participants': Array<ParticipantDto>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchInfoDto
+     */
+    'platformId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MatchInfoDto
+     */
+    'queueId': number;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof MatchInfoDto
+     */
+    'teams': Array<object>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchInfoDto
+     */
+    'tournamentCode': string;
+}
+/**
+ * 
+ * @export
+ * @interface MetadataDto
+ */
+export interface MetadataDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetadataDto
+     */
+    'dataVersion': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetadataDto
+     */
+    'matchId': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MetadataDto
+     */
+    'participants': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ParticipantDto
+ */
+export interface ParticipantDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'assists': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'baronKills': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'bountyLevel': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'champExperience': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'champLevel': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'championId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'championName': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'championTransform': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'consumablesPurchased': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'damageDealtToBuildings': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'damageDealtToObjectives': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'damageDealtToTurrets': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'damageSelfMitigated': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'deaths': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'detectorWardsPlaced': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'doubleKills': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'dragonKills': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'firstBloodAssist': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'firstBloodKill': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'firstTowerAssist': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'firstTowerKill': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'gameEndedInEarlySurrender': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'gameEndedInSurrender': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'goldEarned': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'goldSpent': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'individualPosition': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'inhibitorKills': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'inhibitorTakedowns': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'inhibitorsLost': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'item0': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'item1': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'item2': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'item3': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'item4': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'item5': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'item6': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'itemsPurchased': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'killingSprees': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'kills': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'lane': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'largestCriticalStrike': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'largestKillingSpree': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'largestMultiKill': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'longestTimeSpentLiving': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'magicDamageDealt': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'magicDamageDealtToChampions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'magicDamageTaken': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'neutralMinionsKilled': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'nexusKills': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'nexusLost': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'nexusTakedowns': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'objectivesStolen': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'objectivesStolenAssists': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'participantId': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'pentaKills': number;
+    /**
+     * 
+     * @type {object}
+     * @memberof ParticipantDto
+     */
+    'perks': object;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'physicalDamageDealt': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'physicalDamageDealtToChampions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'physicalDamageTaken': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'profileIcon': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'puuid': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'quadraKills': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'riotIdName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'riotIdTagline': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'role': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'sightWardsBoughtInGame': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'spell1Casts': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'spell2Casts': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'spell3Casts': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'spell4Casts': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'summoner1Casts': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'summoner1Id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'summoner2Casts': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'summoner2Id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'summonerId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'summonerLevel': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'summonerName': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'teamEarlySurrendered': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'teamId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ParticipantDto
+     */
+    'teamPosition': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'timeCCingOthers': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'timePlayed': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalDamageDealt': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalDamageDealtToChampions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalDamageShieldedOnTeammates': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalDamageTaken': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalHeal': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalHealsOnTeammates': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalMinionsKilled': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalTimeCCDealt': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalTimeSpentDead': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'totalUnitsHealed': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'tripleKills': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'trueDamageDealt': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'trueDamageDealtToChampions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'trueDamageTaken': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'turretKills': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'turretTakedowns': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'turretsLost': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'unrealKills': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'visionScore': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'visionWardsBoughtInGame': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'wardsKilled': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ParticipantDto
+     */
+    'wardsPlaced': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ParticipantDto
+     */
+    'win': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface SummonerDto
+ */
+export interface SummonerDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummonerDto
+     */
+    'puuid': string;
+}
 
 /**
  * MatchApi - axios parameter creator
@@ -64,11 +849,11 @@ export const MatchApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {string} puuid 
-         * @param {any} timePeriod 
+         * @param {string} timePeriod 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        matchControllerGetByPuuid: async (puuid: string, timePeriod: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        matchControllerGetByPuuid: async (puuid: string, timePeriod: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'puuid' is not null or undefined
             assertParamExists('matchControllerGetByPuuid', 'puuid', puuid)
             // verify required parameter 'timePeriod' is not null or undefined
@@ -114,18 +899,18 @@ export const MatchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async matchControllerGetById(matchId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async matchControllerGetById(matchId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MatchDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.matchControllerGetById(matchId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {string} puuid 
-         * @param {any} timePeriod 
+         * @param {string} timePeriod 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async matchControllerGetByPuuid(puuid: string, timePeriod: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async matchControllerGetByPuuid(puuid: string, timePeriod: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.matchControllerGetByPuuid(puuid, timePeriod, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -145,17 +930,17 @@ export const MatchApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        matchControllerGetById(matchId: string, options?: any): AxiosPromise<void> {
+        matchControllerGetById(matchId: string, options?: any): AxiosPromise<MatchDto> {
             return localVarFp.matchControllerGetById(matchId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} puuid 
-         * @param {any} timePeriod 
+         * @param {string} timePeriod 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        matchControllerGetByPuuid(puuid: string, timePeriod: any, options?: any): AxiosPromise<void> {
+        matchControllerGetByPuuid(puuid: string, timePeriod: string, options?: any): AxiosPromise<Array<string>> {
             return localVarFp.matchControllerGetByPuuid(puuid, timePeriod, options).then((request) => request(axios, basePath));
         },
     };
@@ -182,12 +967,12 @@ export class MatchApi extends BaseAPI {
     /**
      * 
      * @param {string} puuid 
-     * @param {any} timePeriod 
+     * @param {string} timePeriod 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MatchApi
      */
-    public matchControllerGetByPuuid(puuid: string, timePeriod: any, options?: AxiosRequestConfig) {
+    public matchControllerGetByPuuid(puuid: string, timePeriod: string, options?: AxiosRequestConfig) {
         return MatchApiFp(this.configuration).matchControllerGetByPuuid(puuid, timePeriod, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -248,7 +1033,7 @@ export const SummonerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async summonerControllerGetByName(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async summonerControllerGetByName(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummonerDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerGetByName(name, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -268,7 +1053,7 @@ export const SummonerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        summonerControllerGetByName(name: string, options?: any): AxiosPromise<void> {
+        summonerControllerGetByName(name: string, options?: any): AxiosPromise<SummonerDto> {
             return localVarFp.summonerControllerGetByName(name, options).then((request) => request(axios, basePath));
         },
     };

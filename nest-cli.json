@@ -5,6 +5,9 @@
   "monorepo": true,
   "root": "apps/lol-stats",
   "compilerOptions": {
+    "plugins": [
+      "@nestjs/swagger"
+    ],
     "webpack": true,
     "tsConfigPath": "apps/lol-stats/tsconfig.app.json"
   },
@@ -43,6 +46,42 @@
       "sourceRoot": "libs/riot-proxy-client/src",
       "compilerOptions": {
         "tsConfigPath": "libs/riot-proxy-client/tsconfig.lib.json"
+      }
+    },
+    "report": {
+      "type": "application",
+      "root": "apps/report",
+      "entryFile": "main",
+      "sourceRoot": "apps/report/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/report/tsconfig.app.json"
+      }
+    },
+    "config": {
+      "type": "library",
+      "root": "libs/config",
+      "entryFile": "index",
+      "sourceRoot": "libs/config/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/config/tsconfig.lib.json"
+      }
+    },
+    "user-client": {
+      "type": "library",
+      "root": "libs/user-client",
+      "entryFile": "index",
+      "sourceRoot": "libs/user-client/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/user-client/tsconfig.lib.json"
+      }
+    },
+    "http-client": {
+      "type": "library",
+      "root": "libs/http-client",
+      "entryFile": "index",
+      "sourceRoot": "libs/http-client/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/http-client/tsconfig.lib.json"
       }
     }
   }

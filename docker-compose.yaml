@@ -31,6 +31,16 @@ services:
     environment:
       RIOT_PROXY_BASE_PATH: http://riot-proxy-api:3001
 
+  report:
+    build:
+      context: .
+      dockerfile: apps/report/Dockerfile
+    ports:
+      - '3003:3003'
+    environment:
+      RIOT_PROXY_BASE_PATH: http://riot-proxy-api:3001
+      USER_BASE_PATH: http://user:3002
+
 volumes:
   db:
     driver: local

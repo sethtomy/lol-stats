@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import { DateTime, DateTimeUnit } from 'luxon';
 import { RiotMatchService } from '../riot/riot-match.service';
+import { MatchDto } from './models/match.dto';
 
 @Injectable()
 /**
@@ -27,6 +28,7 @@ export class MatchService {
   public async getById(
     matchId: string,
   ): Promise<RiotAPITypes.MatchV5.MatchDTO> {
-    return this.riotMatchService.getById(matchId);
+    const riotMatchDto = await this.riotMatchService.getById(matchId);
+    return new MatchDto(riotMatchDto);
   }
 }

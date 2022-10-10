@@ -3,10 +3,10 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { UserConfigModule } from '../config/user-config.module';
+import { CommonConfigModule } from '@sethtomy/config';
 
 @Module({
-  imports: [UserConfigModule, TypeOrmModule.forFeature([User])],
+  imports: [CommonConfigModule, TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [UserService],
 })

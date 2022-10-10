@@ -1,7 +1,8 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { MatchService } from './match.service';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { DateTimeUnit } from 'luxon';
+import { MatchDto } from './models/match.dto';
 
 @ApiTags('Match')
 @Controller('match')
@@ -19,7 +20,10 @@ export class MatchController {
   }
 
   @Get(':matchId')
-  public async getById(@Param('matchId') matchId: string) {
+  @ApiOkResponse({
+    type: MatchDto,
+  })
+  public async getById(@Param('matchId') matchId: string): Promise<MatchDto> {
     return this.matchService.getById(matchId);
   }
 }

@@ -11,8 +11,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { UserConfigService } from '../config/user-config.service';
 import { Configuration, SummonerApi } from '@sethtomy/riot-proxy-client';
+import { RiotProxyConfigService } from '@sethtomy/config/riot-proxy-config.service';
 
 @Injectable()
 export class UserService {
@@ -21,12 +21,12 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    configService: UserConfigService,
+    riotProxyConfigService: RiotProxyConfigService,
   ) {
     const config = new Configuration();
     this.summonerApi = new SummonerApi(
       config,
-      configService.RIOT_PROXY_BASE_PATH,
+      riotProxyConfigService.RIOT_PROXY_BASE_PATH,
     );
   }
 
