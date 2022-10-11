@@ -3,13 +3,13 @@ import { SummonerReportInfraModule } from '../summoner-infra-report/summoner-rep
 import { UserReportInfraService } from './user-report-infra.service';
 import { UserReportInfraController } from './user-report-infra.controller';
 import { UserReportModule } from '../../domain/user-report/user-report.module';
-import { CommonConfigModule } from '@sethtomy/config';
+import { UserConfigModule } from '@sethtomy/config';
 import { HttpClientModule } from '@sethtomy/http-client';
 
 @Module({
   imports: [
     HttpClientModule,
-    CommonConfigModule,
+    UserConfigModule,
     SummonerReportInfraModule,
     UserReportModule,
   ],

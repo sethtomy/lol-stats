@@ -3,7 +3,7 @@ import { SummonerReportInfraService } from './summoner-report-infra.service';
 import { SummonerReportController } from './summoner-report.controller';
 import { ChampionReportModule } from '../../domain/champion-report/champion-report.module';
 import { SummonerReportModule } from '../../domain/summoner-report/summoner-report.module';
-import { CommonConfigModule } from '@sethtomy/config';
+import { RiotConfigModule } from '@sethtomy/config';
 import { HttpClientModule } from '@sethtomy/http-client';
 
 @Module({
@@ -11,7 +11,7 @@ import { HttpClientModule } from '@sethtomy/http-client';
   providers: [SummonerReportInfraService],
   imports: [
     HttpClientModule,
-    CommonConfigModule,
+    RiotConfigModule,
     ChampionReportModule,
     SummonerReportModule,
   ],

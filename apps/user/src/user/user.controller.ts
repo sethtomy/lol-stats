@@ -28,18 +28,21 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get(':discordUserId')
+  findOne(@Param('discordUserId') discordUserId: string) {
+    return this.userService.findOne(discordUserId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @Patch(':discordUserId')
+  update(
+    @Param('discordUserId') discordUserId: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.update(discordUserId, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Delete(':discordUserId')
+  remove(@Param('discordUserId') discordUserId: string) {
+    return this.userService.remove(discordUserId);
   }
 }

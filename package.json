@@ -2,8 +2,8 @@
   "name": "lol-stats",
   "version": "0.0.1",
   "description": "",
-  "author": "",
   "private": true,
+  "author": "",
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -20,6 +20,8 @@
     "start:dev:report": "nest start report --watch",
     "start:dev:user": "nest start user --watch",
     "start:debug": "nest start --debug --watch",
+    "start:user:debug": "nest start user --debug --watch",
+    "start:report:debug": "nest start report --debug --watch",
     "start:prod": "node dist/main",
     "start:riot-proxy:prod": "node dist/apps/riot-proxy/main.js",
     "start:user:prod": "node dist/apps/user/main.js",

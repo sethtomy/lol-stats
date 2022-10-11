@@ -25,16 +25,20 @@ export class UserReportInfraService {
   }
 
   async get(userName: string, timePeriod: DateTimeUnit) {
-    const userRes = await this.userApi.userControllerFindOne(userName);
-    const user = userRes.data;
-    const summonerReports = await Promise.all(
-      user.summonerNames.map((summoner) => {
-        return this.summonerReportInfraService.getSummonerReportByPeriod(
-          summoner,
-          timePeriod,
-        );
-      }),
-    );
-    return this.userReportService.get(user, summonerReports);
+    try {
+      const userRes = await this.userApi.userControllerFindOne(userName);
+      const user = userRes.data;
+      const summonerReports = await Promise.all(
+        user.summonerNames.map((summoner) => {
+          return this.summonerReportInfraService.getSummonerReportByPeriod(
+            summoner,
+            timePeriod,
+          );
+        }),
+      );
+      return this.userReportService.get(user, summonerReports);
+    } catch (error) {
+      throw error;
+    }
   }
 }

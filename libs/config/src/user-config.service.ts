@@ -9,10 +9,10 @@ enum ConfigKeys {
 @Injectable()
 export class UserConfigService {
   constructor(private configService: ConfigService) {
-    const RIOT_PROXY_BASE_PATH = this.configService.get<string>(
+    const USER_BASE_PATH = this.configService.get<string>(
       ConfigKeys.USER_BASE_PATH,
     );
-    assert.ok(typeof RIOT_PROXY_BASE_PATH === 'string');
+    assert.ok(typeof USER_BASE_PATH === 'string');
   }
 
   get USER_BASE_PATH(): string {

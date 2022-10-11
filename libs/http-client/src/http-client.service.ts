@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -51,12 +51,18 @@ export class HttpClientService {
       },
       (error: AxiosError) => {
         const errorCode = error.response?.status ?? error.code;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const message = error.response.data.message || error.message;
+        console.log(message);
         if (errorCode < 500) {
-          this.logger.warn(error);
+          this.logger.warn(message);
         } else {
-          this.logger.error(error);
+          this.logger.error(message);
         }
-        return Promise.reject(error);
+        return Promise.reject(
+          new HttpException(message, error.response.status),
+        );
       },
     );
   }

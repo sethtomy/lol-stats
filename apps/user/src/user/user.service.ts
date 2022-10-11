@@ -30,16 +30,22 @@ export class UserService {
     );
   }
 
+  private async getByDiscordUserId(discordUserId: string): Promise<User> {
+    return this.userRepository.findOneBy({
+      discordUserId,
+    });
+  }
+
   async create(createUserDto: CreateUserDto) {
     const user = new User();
     user.discordUserId = createUserDto.discordUserId;
     user.summonerNames = createUserDto.summonerNames;
     await this.validateSummoners(user.summonerNames);
-    const existingUser = await this.userRepository.findOneBy({
-      discordUserId: user.discordUserId,
-    });
+    const existingUser = await this.getByDiscordUserId(user.discordUserId);
     if (existingUser) {
-      throw new ConflictException();
+      throw new ConflictException(
+        `User with Discord User ID ${createUserDto.discordUserId} already exists.`,
+      );
     }
     return this.userRepository.save(user);
   }
@@ -67,19 +73,27 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findOne(id: number): Promise<User> {
-    const user = this.userRepository.findOneBy({ id });
+  private async getByDiscordUserIdOrThrow(
+    discordUserId: string,
+  ): Promise<User> {
+    const user = await this.getByDiscordUserId(discordUserId);
     if (!user) {
-      throw new NotFoundException();
+      throw new NotFoundException(
+        `User with Discord User ID ${discordUserId} not found.`,
+      );
     }
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findOne(discordUserId: string): Promise<User> {
+    return this.getByDiscordUserIdOrThrow(discordUserId);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.userRepository.delete(id);
+  async update(discordUserId: string, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${discordUserId} user`;
+  }
+
+  async remove(discordUserId: string): Promise<void> {
+    await this.userRepository.delete({ discordUserId });
   }
 }

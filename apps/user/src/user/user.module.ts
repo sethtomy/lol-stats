@@ -3,10 +3,10 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { CommonConfigModule } from '@sethtomy/config';
+import { RiotConfigModule } from '@sethtomy/config';
 
 @Module({
-  imports: [CommonConfigModule, TypeOrmModule.forFeature([User])],
+  imports: [RiotConfigModule, TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [UserService],
 })
