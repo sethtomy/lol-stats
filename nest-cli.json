@@ -83,6 +83,24 @@
       "compilerOptions": {
         "tsConfigPath": "libs/http-client/tsconfig.lib.json"
       }
+    },
+    "report-client": {
+      "type": "library",
+      "root": "libs/report-client",
+      "entryFile": "index",
+      "sourceRoot": "libs/report-client/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/report-client/tsconfig.lib.json"
+      }
+    },
+    "discord-bot": {
+      "type": "application",
+      "root": "apps/discord-bot",
+      "entryFile": "main",
+      "sourceRoot": "apps/discord-bot/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/discord-bot/tsconfig.app.json"
+      }
     }
   }
 }

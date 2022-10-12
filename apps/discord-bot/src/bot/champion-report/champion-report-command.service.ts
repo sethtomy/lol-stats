@@ -7,10 +7,15 @@ import {
 } from '@discord-nestjs/core';
 import { MessageEmbed, User } from 'discord.js';
 import { Injectable } from '@nestjs/common';
-import { Configuration, UserReportApi } from '@inimitable-atl/openapi-client-generator';
+import {
+  Configuration,
+  UserReportApi,
+  UserReportDto,
+} from '@sethtomy/report-client';
 import { TransformPipe } from '@discord-nestjs/common';
 import { GetChampionReportDto } from './get-champion-report.dto';
 import { TransformedCommandExecutionContext } from '@discord-nestjs/core/dist/definitions/interfaces/transformed-command-execution-context';
+import { ReportConfigService } from '@sethtomy/config';
 
 @SubCommand({
   name: 'get',
@@ -21,18 +26,26 @@ import { TransformedCommandExecutionContext } from '@discord-nestjs/core/dist/de
 export class ChampionReportCommand
   implements DiscordTransformedCommand<GetChampionReportDto>
 {
+  private readonly userReportApi: UserReportApi;
+
+  constructor(reportConfigService: ReportConfigService) {
+    const config = new Configuration({
+      basePath: reportConfigService.REPORT_BASE_PATH,
+    });
+    this.userReportApi = new UserReportApi(config);
+  }
+
   async handler(
     @Payload() dto: GetChampionReportDto,
     executionContext: TransformedCommandExecutionContext,
   ): Promise<string | void> {
     const timeOutReachedPromise = setTimeout(2.5 * 1000);
     const user = executionContext.interaction.member.user;
-    const userReportApi = ChampionReportCommand.getUserReportApi();
     let embedAlreadySent = false;
-    userReportApi
+    this.userReportApi
       .userReportInfraControllerGet(user.id, dto.timePeriod)
       .then((res) => {
-        const championReport = this.getChampionReport(res, dto);
+        const championReport = this.getChampionReport(res.data, dto);
         ChampionReportCommand.sendMessageEmbed(
           dto,
           user as User,
@@ -47,11 +60,11 @@ export class ChampionReportCommand
     }
   }
 
-  private getChampionReport(res: any, dto: GetChampionReportDto) {
-    // todo - types!
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return res.data.championReports.find((cr) => {
+  private getChampionReport(
+    userReportDto: UserReportDto,
+    dto: GetChampionReportDto,
+  ) {
+    return userReportDto.championReports.find((cr) => {
       return cr.championName === dto.champion;
     });
   }
@@ -87,12 +100,5 @@ export class ChampionReportCommand
     executionContext.interaction.channel.send({
       embeds: [messageEmbed],
     });
-  }
-
-  private static getUserReportApi() {
-    const config = new Configuration({
-      basePath: 'http://localhost:3002',
-    });
-    return new UserReportApi(config);
   }
 }

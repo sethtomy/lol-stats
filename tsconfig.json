@@ -41,6 +41,12 @@
       ],
       "@sethtomy/http-client/*": [
         "libs/http-client/src/*"
+      ],
+      "@sethtomy/report-client": [
+        "libs/report-client/src"
+      ],
+      "@sethtomy/report-client/*": [
+        "libs/report-client/src/*"
       ]
     }
   }
