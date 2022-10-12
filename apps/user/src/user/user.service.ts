@@ -13,6 +13,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { Configuration, SummonerApi } from '@sethtomy/riot-proxy-client';
 import { RiotProxyConfigService } from '@sethtomy/config/riot-proxy-config.service';
+import { HttpClientService } from '@sethtomy/http-client';
 
 @Injectable()
 export class UserService {
@@ -21,12 +22,14 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    httpClientService: HttpClientService,
     riotProxyConfigService: RiotProxyConfigService,
   ) {
     const config = new Configuration();
     this.summonerApi = new SummonerApi(
       config,
       riotProxyConfigService.RIOT_PROXY_BASE_PATH,
+      httpClientService.axiosInstance,
     );
   }
 

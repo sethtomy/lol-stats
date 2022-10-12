@@ -5,8 +5,8 @@ import {
   SubCommand,
   UsePipes,
 } from '@discord-nestjs/core';
-import { MessageEmbed, User } from 'discord.js';
-import { Injectable } from '@nestjs/common';
+import { EmbedBuilder, User } from 'discord.js';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   Configuration,
   UserReportApi,
@@ -16,6 +16,7 @@ import { TransformPipe } from '@discord-nestjs/common';
 import { GetChampionReportDto } from './get-champion-report.dto';
 import { TransformedCommandExecutionContext } from '@discord-nestjs/core/dist/definitions/interfaces/transformed-command-execution-context';
 import { ReportConfigService } from '@sethtomy/config';
+import { HttpClientService } from '@sethtomy/http-client';
 
 @SubCommand({
   name: 'get',
@@ -26,13 +27,19 @@ import { ReportConfigService } from '@sethtomy/config';
 export class ChampionReportCommand
   implements DiscordTransformedCommand<GetChampionReportDto>
 {
+  private readonly logger: Logger = new Logger(ChampionReportCommand.name);
   private readonly userReportApi: UserReportApi;
 
-  constructor(reportConfigService: ReportConfigService) {
-    const config = new Configuration({
-      basePath: reportConfigService.REPORT_BASE_PATH,
-    });
-    this.userReportApi = new UserReportApi(config);
+  constructor(
+    reportConfigService: ReportConfigService,
+    httpClientService: HttpClientService,
+  ) {
+    const config = new Configuration();
+    this.userReportApi = new UserReportApi(
+      config,
+      reportConfigService.REPORT_BASE_PATH,
+      httpClientService.axiosInstance,
+    );
   }
 
   async handler(
@@ -53,6 +60,9 @@ export class ChampionReportCommand
           executionContext,
         );
         embedAlreadySent = true;
+      })
+      .catch((error) => {
+        this.logger.error(error);
       });
     if (!embedAlreadySent) {
       await timeOutReachedPromise;
@@ -75,7 +85,7 @@ export class ChampionReportCommand
     championReport: any,
     executionContext: TransformedCommandExecutionContext,
   ) {
-    const messageEmbed = new MessageEmbed();
+    const messageEmbed = new EmbedBuilder();
     if (!championReport) {
       messageEmbed
         .setColor('#FF0000')

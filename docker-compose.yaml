@@ -41,6 +41,17 @@ services:
       RIOT_PROXY_BASE_PATH: http://riot-proxy-api:3001
       USER_BASE_PATH: http://user:3002
 
+  discord-bot:
+    build:
+      context: .
+      dockerfile: apps/discord-bot/Dockerfile
+    ports:
+      - '3004:3004'
+    environment:
+      USER_BASE_PATH: http://user:3002
+      REPORT_BASE_PATH: http://report:3003
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+
 volumes:
   db:
     driver: local
