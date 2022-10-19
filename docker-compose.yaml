@@ -30,6 +30,7 @@ services:
       - '3002:3002'
     environment:
       RIOT_PROXY_BASE_PATH: http://riot-proxy-api:3001
+      DATABASE_HOST: postgres
 
   report:
     build:

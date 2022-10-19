@@ -92,8 +92,15 @@ export class UserService {
     return this.getByDiscordUserIdOrThrow(discordUserId);
   }
 
-  async update(discordUserId: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${discordUserId} user`;
+  async update(
+    discordUserId: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    const user = await this.getByDiscordUserIdOrThrow(discordUserId);
+    await this.validateSummoners(updateUserDto.summonerNames);
+    user.summonerNames = updateUserDto.summonerNames;
+    await this.userRepository.save(user);
+    return user;
   }
 
   async remove(discordUserId: string): Promise<void> {
