@@ -3,6 +3,7 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfigService } from './config/database-config.service';
 import { DatabaseConfigModule } from './config/database-config.module';
+import { SummonerModule } from './summoner/summoner.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { DatabaseConfigModule } from './config/database-config.module';
       }),
       inject: [DatabaseConfigService],
     }),
+    SummonerModule,
   ],
 })
 export class AppModule {}

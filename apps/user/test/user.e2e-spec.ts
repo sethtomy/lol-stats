@@ -19,10 +19,7 @@ function getCreateUserDto(discordUserId: string): CreateUserDto {
 }
 
 function validateResponse(createUserDto: CreateUserDto, user: User) {
-  expect(user).toStrictEqual({
-    id: expect.any(Number),
-    ...createUserDto,
-  });
+  expect(user).toStrictEqual(createUserDto);
 }
 
 describe('User Integration Tests', () => {
@@ -48,10 +45,7 @@ describe('User Integration Tests', () => {
     test('201 - Happy Path', async () => {
       const res = await userApi.userControllerCreate(createUserDto);
       expect(res.status).toBe(201);
-      expect(res.data).toStrictEqual({
-        id: expect.any(Number),
-        ...createUserDto,
-      });
+      validateResponse(createUserDto, res.data);
     });
 
     test('409 - User Conflict', async () => {
