@@ -104,6 +104,7 @@ export class UserService {
   }
 
   async remove(discordUserId: string): Promise<void> {
+    await this.getByDiscordUserIdOrThrow(discordUserId);
     await this.userRepository.delete({ discordUserId });
   }
 }

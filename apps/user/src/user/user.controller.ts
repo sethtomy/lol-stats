@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -42,6 +44,7 @@ export class UserController {
   }
 
   @Delete(':discordUserId')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('discordUserId') discordUserId: string) {
     return this.userService.remove(discordUserId);
   }
