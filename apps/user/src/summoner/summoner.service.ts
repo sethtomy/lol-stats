@@ -1,26 +1,80 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateSummonerDto } from './dto/create-summoner.dto';
-import { UpdateSummonerDto } from './dto/update-summoner.dto';
+import { UserService } from '../user/user.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../user/entities/user.entity';
+import { Repository } from 'typeorm';
+import { Configuration, SummonerApi } from '@sethtomy/riot-proxy-client';
+import { HttpClientService } from '@sethtomy/http-client';
+import { RiotProxyConfigService } from '@sethtomy/config';
 
 @Injectable()
 export class SummonerService {
-  create(createSummonerDto: CreateSummonerDto) {
-    return 'This action adds a new summoner';
+  private readonly summonerApi: SummonerApi;
+
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    private readonly userService: UserService,
+    httpClientService: HttpClientService,
+    riotProxyConfigService: RiotProxyConfigService,
+  ) {
+    const config = new Configuration();
+    this.summonerApi = new SummonerApi(
+      config,
+      riotProxyConfigService.RIOT_PROXY_BASE_PATH,
+      httpClientService.axiosInstance,
+    );
   }
 
-  findAll() {
-    return `This action returns all summoner`;
+  async create(
+    discordUserId: string,
+    createSummonerDto: CreateSummonerDto,
+  ): Promise<CreateSummonerDto> {
+    const user = await this.userService.findOne(discordUserId);
+    const alreadyExists = user.summonerNames.find(
+      (summonerName) => summonerName === createSummonerDto.name,
+    );
+    if (alreadyExists) {
+      throw new ConflictException(
+        `Summoner ${createSummonerDto.name} already exists.`,
+      );
+    }
+    await this.validateSummoner(createSummonerDto.name);
+    user.summonerNames.push(createSummonerDto.name);
+    await this.userRepository.save(user);
+    return createSummonerDto;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} summoner`;
+  private async validateSummoner(name: string) {
+    try {
+      return await this.summonerApi.summonerControllerGetByName(name);
+    } catch (error) {
+      if (error.response.status === HttpStatus.NOT_FOUND) {
+        throw new BadRequestException(`Summoner '${name}' not found.`);
+      }
+      throw new HttpException(error.message, error.response.status);
+    }
   }
 
-  update(id: number, updateSummonerDto: UpdateSummonerDto) {
-    return `This action updates a #${id} summoner`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} summoner`;
+  async remove(discordUserId: string, name: string): Promise<void> {
+    const user = await this.userService.findOne(discordUserId);
+    const alreadyExists = user.summonerNames.find(
+      (summonerName) => summonerName === name,
+    );
+    if (!alreadyExists) {
+      throw new NotFoundException(`Summoner ${name} does not exist.`);
+    }
+    user.summonerNames = user.summonerNames.filter(
+      (summonerName) => summonerName !== name,
+    );
+    await this.userRepository.save(user);
   }
 }

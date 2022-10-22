@@ -24,6 +24,19 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface CreateSummonerDto
+ */
+export interface CreateSummonerDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSummonerDto
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
  * @interface CreateUserDto
  */
 export interface CreateUserDto {
@@ -33,25 +46,6 @@ export interface CreateUserDto {
      * @memberof CreateUserDto
      */
     'discordUserId': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CreateUserDto
-     */
-    'summonerNames': Array<string>;
-}
-/**
- * 
- * @export
- * @interface UpdateUserDto
- */
-export interface UpdateUserDto {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof UpdateUserDto
-     */
-    'summonerNames': Array<string>;
 }
 /**
  * 
@@ -74,21 +68,25 @@ export interface User {
 }
 
 /**
- * DefaultApi - axios parameter creator
+ * SummonerApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+export const SummonerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {object} body 
+         * @param {string} discordUserId 
+         * @param {CreateSummonerDto} createSummonerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        summonerControllerCreate: async (body: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('summonerControllerCreate', 'body', body)
-            const localVarPath = `/summoner`;
+        summonerControllerCreate: async (discordUserId: string, createSummonerDto: CreateSummonerDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'discordUserId' is not null or undefined
+            assertParamExists('summonerControllerCreate', 'discordUserId', discordUserId)
+            // verify required parameter 'createSummonerDto' is not null or undefined
+            assertParamExists('summonerControllerCreate', 'createSummonerDto', createSummonerDto)
+            const localVarPath = `/user/{discordUserId}/summoner`
+                .replace(`{${"discordUserId"}}`, encodeURIComponent(String(discordUserId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -107,7 +105,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(createSummonerDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -116,77 +114,19 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {string} discordUserId 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        summonerControllerFindAll: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/summoner`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        summonerControllerFindOne: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('summonerControllerFindOne', 'id', id)
-            const localVarPath = `/summoner/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        summonerControllerRemove: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('summonerControllerRemove', 'id', id)
-            const localVarPath = `/summoner/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        summonerControllerRemove: async (discordUserId: string, name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'discordUserId' is not null or undefined
+            assertParamExists('summonerControllerRemove', 'discordUserId', discordUserId)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('summonerControllerRemove', 'name', name)
+            const localVarPath = `/user/{discordUserId}/summoner/{name}`
+                .replace(`{${"discordUserId"}}`, encodeURIComponent(String(discordUserId)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -209,223 +149,100 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} id 
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        summonerControllerUpdate: async (id: string, body: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('summonerControllerUpdate', 'id', id)
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('summonerControllerUpdate', 'body', body)
-            const localVarPath = `/summoner/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
 /**
- * DefaultApi - functional programming interface
+ * SummonerApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+export const SummonerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SummonerApiAxiosParamCreator(configuration)
     return {
         /**
          * 
-         * @param {object} body 
+         * @param {string} discordUserId 
+         * @param {CreateSummonerDto} createSummonerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async summonerControllerCreate(body: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerCreate(body, options);
+        async summonerControllerCreate(discordUserId: string, createSummonerDto: CreateSummonerDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateSummonerDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerCreate(discordUserId, createSummonerDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
+         * @param {string} discordUserId 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async summonerControllerFindAll(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerFindAll(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async summonerControllerFindOne(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerFindOne(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async summonerControllerRemove(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerRemove(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async summonerControllerUpdate(id: string, body: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerUpdate(id, body, options);
+        async summonerControllerRemove(discordUserId: string, name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.summonerControllerRemove(discordUserId, name, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * DefaultApi - factory interface
+ * SummonerApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
+export const SummonerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SummonerApiFp(configuration)
     return {
         /**
          * 
-         * @param {object} body 
+         * @param {string} discordUserId 
+         * @param {CreateSummonerDto} createSummonerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        summonerControllerCreate(body: object, options?: any): AxiosPromise<string> {
-            return localVarFp.summonerControllerCreate(body, options).then((request) => request(axios, basePath));
+        summonerControllerCreate(discordUserId: string, createSummonerDto: CreateSummonerDto, options?: any): AxiosPromise<CreateSummonerDto> {
+            return localVarFp.summonerControllerCreate(discordUserId, createSummonerDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @param {string} discordUserId 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        summonerControllerFindAll(options?: any): AxiosPromise<string> {
-            return localVarFp.summonerControllerFindAll(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        summonerControllerFindOne(id: string, options?: any): AxiosPromise<string> {
-            return localVarFp.summonerControllerFindOne(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        summonerControllerRemove(id: string, options?: any): AxiosPromise<string> {
-            return localVarFp.summonerControllerRemove(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        summonerControllerUpdate(id: string, body: object, options?: any): AxiosPromise<string> {
-            return localVarFp.summonerControllerUpdate(id, body, options).then((request) => request(axios, basePath));
+        summonerControllerRemove(discordUserId: string, name: string, options?: any): AxiosPromise<void> {
+            return localVarFp.summonerControllerRemove(discordUserId, name, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * DefaultApi - object-oriented interface
+ * SummonerApi - object-oriented interface
  * @export
- * @class DefaultApi
+ * @class SummonerApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI {
+export class SummonerApi extends BaseAPI {
     /**
      * 
-     * @param {object} body 
+     * @param {string} discordUserId 
+     * @param {CreateSummonerDto} createSummonerDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof SummonerApi
      */
-    public summonerControllerCreate(body: object, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).summonerControllerCreate(body, options).then((request) => request(this.axios, this.basePath));
+    public summonerControllerCreate(discordUserId: string, createSummonerDto: CreateSummonerDto, options?: AxiosRequestConfig) {
+        return SummonerApiFp(this.configuration).summonerControllerCreate(discordUserId, createSummonerDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
+     * @param {string} discordUserId 
+     * @param {string} name 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof SummonerApi
      */
-    public summonerControllerFindAll(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).summonerControllerFindAll(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public summonerControllerFindOne(id: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).summonerControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public summonerControllerRemove(id: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).summonerControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {object} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public summonerControllerUpdate(id: string, body: object, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).summonerControllerUpdate(id, body, options).then((request) => request(this.axios, this.basePath));
+    public summonerControllerRemove(discordUserId: string, name: string, options?: AxiosRequestConfig) {
+        return SummonerApiFp(this.configuration).summonerControllerRemove(discordUserId, name, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -566,45 +383,6 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} discordUserId 
-         * @param {UpdateUserDto} updateUserDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userControllerUpdate: async (discordUserId: string, updateUserDto: UpdateUserDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'discordUserId' is not null or undefined
-            assertParamExists('userControllerUpdate', 'discordUserId', discordUserId)
-            // verify required parameter 'updateUserDto' is not null or undefined
-            assertParamExists('userControllerUpdate', 'updateUserDto', updateUserDto)
-            const localVarPath = `/user/{discordUserId}`
-                .replace(`{${"discordUserId"}}`, encodeURIComponent(String(discordUserId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateUserDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -654,17 +432,6 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerRemove(discordUserId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @param {string} discordUserId 
-         * @param {UpdateUserDto} updateUserDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async userControllerUpdate(discordUserId: string, updateUserDto: UpdateUserDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerUpdate(discordUserId, updateUserDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -709,16 +476,6 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          */
         userControllerRemove(discordUserId: string, options?: any): AxiosPromise<void> {
             return localVarFp.userControllerRemove(discordUserId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} discordUserId 
-         * @param {UpdateUserDto} updateUserDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userControllerUpdate(discordUserId: string, updateUserDto: UpdateUserDto, options?: any): AxiosPromise<User> {
-            return localVarFp.userControllerUpdate(discordUserId, updateUserDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -771,18 +528,6 @@ export class UserApi extends BaseAPI {
      */
     public userControllerRemove(discordUserId: string, options?: AxiosRequestConfig) {
         return UserApiFp(this.configuration).userControllerRemove(discordUserId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} discordUserId 
-     * @param {UpdateUserDto} updateUserDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public userControllerUpdate(discordUserId: string, updateUserDto: UpdateUserDto, options?: AxiosRequestConfig) {
-        return UserApiFp(this.configuration).userControllerUpdate(discordUserId, updateUserDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -5,6 +5,6 @@ export class User {
   @PrimaryColumn()
   discordUserId: string;
 
-  @Column('text', { array: true })
+  @Column('text', { array: true, default: [] })
   summonerNames: string[];
 }

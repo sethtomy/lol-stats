@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpCode,
@@ -11,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 
@@ -33,14 +31,6 @@ export class UserController {
   @Get(':discordUserId')
   findOne(@Param('discordUserId') discordUserId: string) {
     return this.userService.findOne(discordUserId);
-  }
-
-  @Patch(':discordUserId')
-  update(
-    @Param('discordUserId') discordUserId: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return this.userService.update(discordUserId, updateUserDto);
   }
 
   @Delete(':discordUserId')

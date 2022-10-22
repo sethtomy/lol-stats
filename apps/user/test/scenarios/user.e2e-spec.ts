@@ -1,26 +1,11 @@
-import {
-  CreateUserDto,
-  UserApi,
-  Configuration,
-  User,
-} from '../../../libs/user-client/src';
-import { Config } from './config';
+import { Configuration, UserApi } from '../../../../libs/user-client/src';
+import { Config } from '../config';
 import { randomUUID } from 'crypto';
-
-function getDiscordUserId(): string {
-  return 'int-test-' + randomUUID(); // no validation
-}
-
-function getCreateUserDto(discordUserId: string): CreateUserDto {
-  return {
-    discordUserId,
-    summonerNames: ['HeavensVanguard'],
-  };
-}
-
-function validateResponse(createUserDto: CreateUserDto, user: User) {
-  expect(user).toStrictEqual(createUserDto);
-}
+import {
+  getCreateUserDto,
+  getDiscordUserId,
+  validateResponse,
+} from '../data/user';
 
 describe('User Integration Tests', () => {
   const config = Config.instance;
@@ -28,12 +13,6 @@ describe('User Integration Tests', () => {
   const userApi = new UserApi(configuration, config.URL);
   const DISCORD_USER_ID = getDiscordUserId();
   const createUserDto = getCreateUserDto(DISCORD_USER_ID);
-  let EXISTING_USER_COUNT: number;
-
-  beforeAll(async () => {
-    const res = await userApi.userControllerFindAll();
-    EXISTING_USER_COUNT = res.data.length;
-  });
 
   afterEach(async () => {
     await userApi.userControllerRemove(DISCORD_USER_ID, {
@@ -75,7 +54,6 @@ describe('User Integration Tests', () => {
       await userApi.userControllerCreate(createUserDto);
       const res = await userApi.userControllerFindAll();
       expect(res.status).toBe(200);
-      expect(res.data.length).toBe(1 + EXISTING_USER_COUNT);
       const user = res.data.find(
         (user) => user.discordUserId === DISCORD_USER_ID,
       );

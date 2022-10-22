@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { SummonerService } from './summoner.service';
 import { CreateSummonerDto } from './dto/create-summoner.dto';
-import { UpdateSummonerDto } from './dto/update-summoner.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('summoner')
+@ApiTags('Summoner')
+@Controller('user/:discordUserId/summoner')
 export class SummonerController {
   constructor(private readonly summonerService: SummonerService) {}
 
   @Post()
-  create(@Body() createSummonerDto: CreateSummonerDto) {
-    return this.summonerService.create(createSummonerDto);
+  create(
+    @Param('discordUserId') discordUserId: string,
+    @Body() createSummonerDto: CreateSummonerDto,
+  ) {
+    return this.summonerService.create(discordUserId, createSummonerDto);
   }
 
-  @Get()
-  findAll() {
-    return this.summonerService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.summonerService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSummonerDto: UpdateSummonerDto) {
-    return this.summonerService.update(+id, updateSummonerDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.summonerService.remove(+id);
+  @Delete(':name')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(
+    @Param('discordUserId') discordUserId: string,
+    @Param('name') name: string,
+  ) {
+    return this.summonerService.remove(discordUserId, name);
   }
 }
