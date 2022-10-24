@@ -70,6 +70,7 @@ export class AddSummonerCommand
       discordUser.id,
       dto.summoner,
     );
+    console.log(summonerExists);
     if (summonerExists) {
       sendUserMessageEmbed(
         executionContext.interaction,
@@ -79,7 +80,7 @@ export class AddSummonerCommand
     } else {
       sendErrorMessageEmbed(
         executionContext.interaction,
-        `Summoner ${dto.summoner} does not exist.`,
+        `Summoner "${dto.summoner}" does not exist.`,
       );
     }
   }
@@ -110,23 +111,14 @@ export class AddSummonerCommand
     const createSummonerDto: CreateSummonerDto = {
       name: summoner,
     };
-    try {
-      const res = await this.summonerApi.summonerControllerCreate(
-        discordUserId,
-        createSummonerDto,
-        {
-          validateStatus: (status) =>
-            status === 200 || status === 409 || status === 404,
-        },
-      );
-      console.log(res.status !== 404);
-      return true;
-    } catch (error) {
-      console.log(error);
-      if (error.response.status === 404) {
-        return false;
-      }
-      throw error;
-    }
+    const res = await this.summonerApi.summonerControllerCreate(
+      discordUserId,
+      createSummonerDto,
+      {
+        validateStatus: (status) =>
+          status === 201 || status === 409 || status === 404,
+      },
+    );
+    return res.status !== 404;
   }
 }

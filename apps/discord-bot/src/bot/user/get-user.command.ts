@@ -5,6 +5,7 @@ import { Configuration, UserApi } from '@sethtomy/user-client';
 import { UserConfigService } from '@sethtomy/config';
 import { HttpClientService } from '@sethtomy/http-client';
 import { sendUserMessageEmbed } from './user-message-embed';
+import { DEFAULT_MESSAGE } from '../common/message';
 
 @SubCommand({
   name: 'get',
@@ -25,9 +26,10 @@ export class GetUserCommand implements DiscordCommand {
       httpClientService.axiosInstance,
     );
   }
-  async handler(interaction: CommandInteraction): Promise<void> {
+  async handler(interaction: CommandInteraction): Promise<string> {
     const user = interaction.member.user as User;
     const res = await this.userApi.userControllerFindOne(user.id);
     sendUserMessageEmbed(interaction, user, res.data.summonerNames);
+    return DEFAULT_MESSAGE;
   }
 }
