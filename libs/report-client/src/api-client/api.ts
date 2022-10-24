@@ -32,6 +32,24 @@ export interface ChampionReportDto {
      * @type {string}
      * @memberof ChampionReportDto
      */
+    'winRate': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChampionReportDto
+     */
+    'wins': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChampionReportDto
+     */
+    'totalGames': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChampionReportDto
+     */
     'championName': string;
 }
 /**
@@ -40,6 +58,24 @@ export interface ChampionReportDto {
  * @interface SummonerReportDto
  */
 export interface SummonerReportDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummonerReportDto
+     */
+    'winRate': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SummonerReportDto
+     */
+    'wins': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SummonerReportDto
+     */
+    'totalGames': number;
     /**
      * 
      * @type {string}
@@ -59,6 +95,24 @@ export interface SummonerReportDto {
  * @interface UserReportDto
  */
 export interface UserReportDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserReportDto
+     */
+    'winRate': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserReportDto
+     */
+    'wins': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserReportDto
+     */
+    'totalGames': number;
     /**
      * 
      * @type {string}

@@ -14,7 +14,7 @@ import { CreateSummonerDto } from '@sethtomy/user-client';
 import { SummonerDto } from './summoner.dto';
 import { sendUserMessageEmbed } from './user-message-embed';
 import { DEFAULT_MESSAGE } from '../common/message';
-import { AbstractSummonerCommand } from './abstract-summoner-command';
+import { AbstractUserCommand } from '../common/abstract-user-command';
 import { sendErrorMessageEmbed } from '../common/message-embed';
 
 @SubCommand({
@@ -24,7 +24,7 @@ import { sendErrorMessageEmbed } from '../common/message-embed';
 @Injectable()
 @UsePipes(TransformPipe)
 export class AddSummonerCommand
-  extends AbstractSummonerCommand
+  extends AbstractUserCommand
   implements DiscordTransformedCommand<SummonerDto>
 {
   constructor(

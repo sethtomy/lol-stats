@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export interface AbstractReportOptions {
   wins: number;
   totalGames: number;
@@ -6,8 +8,22 @@ export interface AbstractReportOptions {
 // todo: add to-from date?
 // todo: add description to state time period
 export default abstract class AbstractReport {
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
   public winRate: string;
+
+  @ApiProperty({
+    type: Number,
+    required: true,
+  })
   public wins: number;
+
+  @ApiProperty({
+    type: Number,
+    required: true,
+  })
   public totalGames: number;
 
   protected constructor(options: AbstractReportOptions) {

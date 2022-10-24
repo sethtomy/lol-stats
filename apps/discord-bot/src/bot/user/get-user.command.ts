@@ -5,7 +5,7 @@ import { UserConfigService } from '@sethtomy/config';
 import { HttpClientService } from '@sethtomy/http-client';
 import { sendUserMessageEmbed } from './user-message-embed';
 import { DEFAULT_MESSAGE } from '../common/message';
-import { AbstractSummonerCommand } from './abstract-summoner-command';
+import { AbstractUserCommand } from '../common/abstract-user-command';
 
 @SubCommand({
   name: 'get',
@@ -13,7 +13,7 @@ import { AbstractSummonerCommand } from './abstract-summoner-command';
 })
 @Injectable()
 export class GetUserCommand
-  extends AbstractSummonerCommand
+  extends AbstractUserCommand
   implements DiscordCommand
 {
   constructor(

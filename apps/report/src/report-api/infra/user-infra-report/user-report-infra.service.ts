@@ -5,6 +5,7 @@ import { UserReportService } from '../../domain/user-report/user-report.service'
 import { Configuration, UserApi } from '@sethtomy/user-client';
 import { UserConfigService } from '@sethtomy/config/user-config.service';
 import { HttpClientService } from '@sethtomy/http-client';
+import { UserReportDto } from '../../domain/user-report/user-report.dto';
 
 @Injectable()
 export class UserReportInfraService {
@@ -24,7 +25,10 @@ export class UserReportInfraService {
     );
   }
 
-  async get(userName: string, timePeriod: DateTimeUnit) {
+  async get(
+    userName: string,
+    timePeriod: DateTimeUnit,
+  ): Promise<UserReportDto> {
     try {
       const userRes = await this.userApi.userControllerFindOne(userName);
       const user = userRes.data;

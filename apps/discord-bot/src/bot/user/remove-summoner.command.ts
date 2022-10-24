@@ -14,7 +14,7 @@ import { SummonerDto } from './summoner.dto';
 import { sendUserMessageEmbed } from './user-message-embed';
 import { DEFAULT_MESSAGE } from '../common/message';
 import { sendErrorMessageEmbed } from '../common/message-embed';
-import { AbstractSummonerCommand } from './abstract-summoner-command';
+import { AbstractUserCommand } from '../common/abstract-user-command';
 
 @SubCommand({
   name: 'remove-summoner',
@@ -23,7 +23,7 @@ import { AbstractSummonerCommand } from './abstract-summoner-command';
 @Injectable()
 @UsePipes(TransformPipe)
 export class RemoveSummonerCommand
-  extends AbstractSummonerCommand
+  extends AbstractUserCommand
   implements DiscordTransformedCommand<SummonerDto>
 {
   constructor(

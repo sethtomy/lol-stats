@@ -8,7 +8,7 @@ import {
   UserApi,
 } from '@sethtomy/user-client';
 
-export abstract class AbstractSummonerCommand {
+export abstract class AbstractUserCommand {
   protected readonly userApi: UserApi;
   protected readonly summonerApi: SummonerApi;
 
