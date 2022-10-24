@@ -2,6 +2,7 @@ import { Command, UseGroup } from '@discord-nestjs/core';
 import { GetUserCommand } from './user/get-user.command';
 import { ChampionReportCommand } from './champion-report/champion-report.command';
 import { AddSummonerCommand } from './user/add-summoner.command';
+import { RemoveSummonerCommand } from './user/remove-summoner.command';
 
 @Command({
   name: 'ls',
@@ -11,6 +12,7 @@ import { AddSummonerCommand } from './user/add-summoner.command';
       { name: 'user', description: 'User administration.' },
       GetUserCommand,
       AddSummonerCommand,
+      RemoveSummonerCommand,
     ),
     UseGroup(
       {

@@ -10,20 +10,19 @@ import { TransformPipe } from '@discord-nestjs/common';
 import { TransformedCommandExecutionContext } from '@discord-nestjs/core/dist/definitions/interfaces/transformed-command-execution-context';
 import { UserConfigService } from '@sethtomy/config';
 import { HttpClientService } from '@sethtomy/http-client';
-import { CreateSummonerDto } from '@sethtomy/user-client';
 import { SummonerDto } from './summoner.dto';
 import { sendUserMessageEmbed } from './user-message-embed';
 import { DEFAULT_MESSAGE } from '../common/message';
-import { AbstractSummonerCommand } from './abstract-summoner-command';
 import { sendErrorMessageEmbed } from '../common/message-embed';
+import { AbstractSummonerCommand } from './abstract-summoner-command';
 
 @SubCommand({
-  name: 'add-summoner',
-  description: 'Add a Summoner to your account.',
+  name: 'remove-summoner',
+  description: 'Remove a Summoner from your account.',
 })
 @Injectable()
 @UsePipes(TransformPipe)
-export class AddSummonerCommand
+export class RemoveSummonerCommand
   extends AbstractSummonerCommand
   implements DiscordTransformedCommand<SummonerDto>
 {
@@ -48,12 +47,12 @@ export class AddSummonerCommand
   ): Promise<void> {
     const discordUser = executionContext.interaction.member.user as DiscordUser;
     const user = await this.createUserIfDoesNotExist(discordUser.id);
-    const summonerExists = await this.createSummonerIfDoesNotExist(
+    const summonerDeleted = await this.deleteSummoner(
       discordUser.id,
       dto.summoner,
     );
-    console.log(summonerExists);
-    if (summonerExists) {
+    console.log(summonerDeleted);
+    if (summonerDeleted) {
       sendUserMessageEmbed(
         executionContext.interaction,
         discordUser,
@@ -69,23 +68,19 @@ export class AddSummonerCommand
 
   private getSummoners(previous: string[], now: string): string[] {
     const set = new Set(previous);
-    set.add(now);
+    set.delete(now);
     return Array.from(set);
   }
 
-  private async createSummonerIfDoesNotExist(
+  private async deleteSummoner(
     discordUserId: string,
     summoner: string,
   ): Promise<boolean> {
-    const createSummonerDto: CreateSummonerDto = {
-      name: summoner,
-    };
-    const res = await this.summonerApi.summonerControllerCreate(
+    const res = await this.summonerApi.summonerControllerRemove(
       discordUserId,
-      createSummonerDto,
+      summoner,
       {
-        validateStatus: (status) =>
-          status === 201 || status === 409 || status === 404,
+        validateStatus: (status) => status === 204 || status === 404,
       },
     );
     return res.status !== 404;

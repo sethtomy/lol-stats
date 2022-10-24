@@ -7,6 +7,7 @@ import { ChampionReportCommand } from './champion-report/champion-report.command
 import { ReportConfigModule, UserConfigModule } from '@sethtomy/config';
 import { HttpClientModule } from '@sethtomy/http-client';
 import { AddSummonerCommand } from './user/add-summoner.command';
+import { RemoveSummonerCommand } from './user/remove-summoner.command';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AddSummonerCommand } from './user/add-summoner.command';
     LsCommand,
     ChampionReportCommand,
     AddSummonerCommand,
+    RemoveSummonerCommand,
   ],
 })
 export class BotModule {}
