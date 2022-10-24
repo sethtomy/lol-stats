@@ -17,6 +17,7 @@ import { GetChampionReportDto } from './get-champion-report.dto';
 import { TransformedCommandExecutionContext } from '@discord-nestjs/core/dist/definitions/interfaces/transformed-command-execution-context';
 import { ReportConfigService } from '@sethtomy/config';
 import { HttpClientService } from '@sethtomy/http-client';
+import { DEFAULT_MESSAGE } from '../common/message';
 
 @SubCommand({
   name: 'get',
@@ -66,7 +67,7 @@ export class ChampionReportCommand
       });
     if (!embedAlreadySent) {
       await timeOutReachedPromise;
-      return "I've received your request and will respond shortly.";
+      return DEFAULT_MESSAGE;
     }
   }
 

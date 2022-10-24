@@ -16,7 +16,7 @@ import { GatewayIntentBits } from 'discord.js';
         },
         registerCommandOptions: [
           {
-            forGuild: '402225150512070677', // swank palace
+            forGuild: configService.get('SERVER_ID'),
             removeCommandsBefore: true,
           },
         ],

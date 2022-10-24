@@ -56,6 +56,18 @@ describe('Summoner Integration Tests', () => {
       );
     });
 
+    test('404 - Summoner DNE (Riot)', async () => {
+      await summonerApi.summonerControllerCreate(
+        DISCORD_USER_ID,
+        {
+          name: randomUUID(),
+        },
+        {
+          validateStatus: (status) => status === 404,
+        },
+      );
+    });
+
     test('409 - Conflict', async () => {
       await summonerApi.summonerControllerCreate(
         DISCORD_USER_ID,

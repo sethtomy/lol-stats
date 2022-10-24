@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   HttpException,
   HttpStatus,
@@ -57,10 +56,11 @@ export class SummonerService {
     try {
       return await this.summonerApi.summonerControllerGetByName(name);
     } catch (error) {
-      if (error.response.status === HttpStatus.NOT_FOUND) {
-        throw new BadRequestException(`Summoner '${name}' not found.`);
+      console.log(error.response);
+      if (error.status === HttpStatus.NOT_FOUND) {
+        throw new NotFoundException(`Summoner '${name}' not found.`);
       }
-      throw new HttpException(error.message, error.response.status);
+      throw new HttpException(error.message, error.status);
     }
   }
 

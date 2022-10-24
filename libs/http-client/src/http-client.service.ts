@@ -60,6 +60,8 @@ export class HttpClientService {
         } else {
           this.logger.error(message);
         }
+        console.log('foo');
+        console.log(error.response.status);
         return Promise.reject(
           new HttpException(message, error.response.status),
         );

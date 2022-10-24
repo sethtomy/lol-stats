@@ -7,6 +7,7 @@ import { SummonerModule } from './summoner/summoner.module';
 
 @Module({
   imports: [
+    DatabaseConfigModule,
     UserModule,
     TypeOrmModule.forRootAsync({
       imports: [DatabaseConfigModule],

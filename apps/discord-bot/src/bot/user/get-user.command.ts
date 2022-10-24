@@ -1,9 +1,10 @@
 import { DiscordCommand, SubCommand } from '@discord-nestjs/core';
-import { CommandInteraction, EmbedBuilder } from 'discord.js';
+import { CommandInteraction, User } from 'discord.js';
 import { Injectable } from '@nestjs/common';
 import { Configuration, UserApi } from '@sethtomy/user-client';
 import { UserConfigService } from '@sethtomy/config';
 import { HttpClientService } from '@sethtomy/http-client';
+import { sendUserMessageEmbed } from './user-message-embed';
 
 @SubCommand({
   name: 'get',
@@ -25,17 +26,8 @@ export class GetUserCommand implements DiscordCommand {
     );
   }
   async handler(interaction: CommandInteraction): Promise<void> {
-    const user = interaction.member.user;
+    const user = interaction.member.user as User;
     const res = await this.userApi.userControllerFindOne(user.id);
-    const messageEmbed = new EmbedBuilder()
-      .setColor('#00FF00')
-      .setTitle('User Data')
-      .addFields({ name: 'User Name', value: user.username })
-      .addFields(
-        res.data.summonerNames.map((summoner, idx) => {
-          return { name: `Summoner ${idx + 1}`, value: summoner };
-        }),
-      );
-    interaction.channel.send({ embeds: [messageEmbed] });
+    sendUserMessageEmbed(interaction, user, res.data.summonerNames);
   }
 }
