@@ -85,12 +85,20 @@ export class UserReportCommand
         value: `Win Rate ${championReport.winRate}, Wins ${championReport.wins}, Total Games ${championReport.totalGames}`,
       };
     });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const soloDuoMessage = `${userReport.highestSoloDuoLeague?.tier} ${userReport.highestSoloDuoLeague?.rank} ${userReport.highestSoloDuoLeague?.leaguePoints}`;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const flexMessage = `${userReport.highestFlexLeague?.tier} ${userReport.highestFlexLeague?.rank} ${userReport.highestFlexLeague?.leaguePoints}`;
     const messageEmbed = getSuccessMessageEmbed()
       .setTitle(`User Report for ${discordUser.username}`)
       .addFields([
         { name: 'Win Rate', value: userReport.winRate },
         { name: 'Wins', value: userReport.wins.toString() },
         { name: 'Total Games', value: userReport.totalGames.toString() },
+        { name: 'Highest Solo/Duo Rank', value: soloDuoMessage },
+        { name: 'Highest Flex Rank', value: flexMessage },
         ...fields,
       ]);
     sendMessageEmbed(executionContext.interaction, messageEmbed);

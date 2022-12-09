@@ -161,13 +161,13 @@ export interface UserReportDto {
      * @type {object}
      * @memberof UserReportDto
      */
-    'highestSoloDuoLeague': object;
+    'highestSoloDuoLeague'?: object;
     /**
      * 
      * @type {object}
      * @memberof UserReportDto
      */
-    'highestFlexLeague': object;
+    'highestFlexLeague'?: object;
 }
 /**
  * 
