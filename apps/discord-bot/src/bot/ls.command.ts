@@ -4,6 +4,7 @@ import { ChampionReportCommand } from './champion-report/champion-report.command
 import { AddSummonerCommand } from './user/add-summoner.command';
 import { RemoveSummonerCommand } from './user/remove-summoner.command';
 import { UserReportCommand } from './user-report/user-report.command';
+import { ServerReportCommand } from './server-report/server-report.command';
 
 @Command({
   name: 'ls',
@@ -28,6 +29,13 @@ import { UserReportCommand } from './user-report/user-report.command';
         description: 'User report for the current user.',
       },
       UserReportCommand,
+    ),
+    UseGroup(
+      {
+        name: 'server-report',
+        description: 'Server report for this server.',
+      },
+      ServerReportCommand,
     ),
   ],
 })

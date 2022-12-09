@@ -55,6 +55,25 @@ export interface ChampionReportDto {
 /**
  * 
  * @export
+ * @interface ServerReportDto
+ */
+export interface ServerReportDto {
+    /**
+     * 
+     * @type {WinRateDto}
+     * @memberof ServerReportDto
+     */
+    'lowestWinRate': WinRateDto;
+    /**
+     * 
+     * @type {WinRateDto}
+     * @memberof ServerReportDto
+     */
+    'highestWinRate': WinRateDto;
+}
+/**
+ * 
+ * @export
  * @interface SummonerReportDto
  */
 export interface SummonerReportDto {
@@ -132,6 +151,126 @@ export interface UserReportDto {
      */
     'championReports': Array<ChampionReportDto>;
 }
+/**
+ * 
+ * @export
+ * @interface WinRateDto
+ */
+export interface WinRateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof WinRateDto
+     */
+    'winRate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WinRateDto
+     */
+    'userName': string;
+}
+
+/**
+ * ServerReportApi - axios parameter creator
+ * @export
+ */
+export const ServerReportApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} timePeriod 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        serverReportInfraControllerGet: async (timePeriod: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'timePeriod' is not null or undefined
+            assertParamExists('serverReportInfraControllerGet', 'timePeriod', timePeriod)
+            const localVarPath = `/server-report-infra/time-period/{timePeriod}`
+                .replace(`{${"timePeriod"}}`, encodeURIComponent(String(timePeriod)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ServerReportApi - functional programming interface
+ * @export
+ */
+export const ServerReportApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ServerReportApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} timePeriod 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async serverReportInfraControllerGet(timePeriod: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServerReportDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.serverReportInfraControllerGet(timePeriod, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ServerReportApi - factory interface
+ * @export
+ */
+export const ServerReportApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ServerReportApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} timePeriod 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        serverReportInfraControllerGet(timePeriod: string, options?: any): AxiosPromise<ServerReportDto> {
+            return localVarFp.serverReportInfraControllerGet(timePeriod, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ServerReportApi - object-oriented interface
+ * @export
+ * @class ServerReportApi
+ * @extends {BaseAPI}
+ */
+export class ServerReportApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} timePeriod 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServerReportApi
+     */
+    public serverReportInfraControllerGet(timePeriod: string, options?: AxiosRequestConfig) {
+        return ServerReportApiFp(this.configuration).serverReportInfraControllerGet(timePeriod, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * SummonerReportApi - axios parameter creator

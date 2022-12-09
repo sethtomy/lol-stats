@@ -9,5 +9,5 @@ export class TimeReportDto {
     type: ParamType.STRING,
     required: true,
   })
-  timePeriod;
+  timePeriod: string;
 }

@@ -3,9 +3,11 @@ import { DiscordModule } from '@discord-nestjs/core';
 import { BotModule } from './bot/bot.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GatewayIntentBits } from 'discord.js';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot(),
     DiscordModule.forRootAsync({
       imports: [ConfigModule],

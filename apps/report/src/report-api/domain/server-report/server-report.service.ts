@@ -1,21 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { UserReportDto } from '@sethtomy/report-client';
+import { ServerReportDto } from '../summoner-report/server-report.dto';
+import { UserReportDto } from '../user-report/user-report.dto';
 
 @Injectable()
 export class ServerReportService {
   get(userReports: UserReportDto[]) {
     const lowestWinRate = this.getLowestWinRate(userReports);
     const highestWinRate = this.getHighestWinRate(userReports);
-    return {
-      lowestWinRate: {
-        user: lowestWinRate.userName,
-        winRate: this.getWinRate(lowestWinRate),
-      },
-      highestWinRate: {
-        user: highestWinRate.userName,
-        winRate: this.getWinRate(highestWinRate),
-      },
-    };
+    return new ServerReportDto({
+      highestWinRate,
+      lowestWinRate,
+    });
   }
 
   private getWinRate(userReportDto: UserReportDto) {
@@ -26,8 +21,11 @@ export class ServerReportService {
     const userReport = userReports.reduce((a, b) => {
       const aWinRate = this.getWinRate(a);
       const bWinRate = this.getWinRate(b);
+      // todo: Check how this behaves as users have less than 3 games
       if (aWinRate > bWinRate) {
-        return a;
+        if (a.totalGames > 2) {
+          return a;
+        }
       }
       return b;
     });
