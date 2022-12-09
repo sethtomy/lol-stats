@@ -7,5 +7,6 @@ import { RiotModule } from '../riot/riot.module';
   imports: [RiotModule],
   controllers: [SummonerController],
   providers: [SummonerService],
+  exports: [SummonerService],
 })
 export class SummonerModule {}

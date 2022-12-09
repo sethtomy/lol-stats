@@ -4,6 +4,7 @@ import { RiotModule } from './riot/riot.module';
 import { ConfigModule } from '@nestjs/config';
 import { MatchModule } from './match/match.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LeagueModule } from './league/league.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     SummonerModule,
     RiotModule,
     MatchModule,
+    LeagueModule,
   ],
   providers: [
     {

@@ -54,7 +54,6 @@ export class HttpClientService {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const message = error.response.data.message || error.message;
-        console.log(message);
         if (errorCode < 500) {
           this.logger.warn(message);
         } else {
