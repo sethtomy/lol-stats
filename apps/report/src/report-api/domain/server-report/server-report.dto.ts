@@ -1,5 +1,5 @@
+import { WinRateDto } from '../summoner-report/win-rate.dto';
 import { UserReportDto } from '../user-report/user-report.dto';
-import { WinRateDto } from './win-rate.dto';
 
 interface ServerReportDtoOpts {
   lowestWinRate: UserReportDto;
@@ -8,7 +8,6 @@ interface ServerReportDtoOpts {
 
 export class ServerReportDto {
   lowestWinRate: WinRateDto;
-
   highestWinRate: WinRateDto;
 
   constructor(opts: ServerReportDtoOpts) {

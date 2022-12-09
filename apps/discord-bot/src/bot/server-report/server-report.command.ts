@@ -4,7 +4,7 @@ import {
   SubCommand,
   UsePipes,
 } from '@discord-nestjs/core';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   Configuration,
   ServerReportApi,
@@ -20,6 +20,7 @@ import {
   getSuccessMessageEmbed,
   sendMessageEmbed,
 } from '../common/message-embed';
+import { addLy, capitalizeFirst } from '@sethtomy/util/string';
 
 @SubCommand({
   name: 'get',
@@ -30,6 +31,7 @@ import {
 export class ServerReportCommand
   implements DiscordTransformedCommand<TimeReportDto>
 {
+  private readonly logger: Logger = new Logger(ServerReportCommand.name);
   private readonly serverReportApi: ServerReportApi;
 
   constructor(
@@ -49,7 +51,9 @@ export class ServerReportCommand
     @Payload() dto: TimeReportDto,
     executionContext: TransformedCommandExecutionContext,
   ): Promise<string | void> {
-    this.runInBackground(dto, executionContext);
+    this.runInBackground(dto, executionContext).catch((error) => {
+      this.logger.error(error);
+    });
     return DEFAULT_MESSAGE;
   }
 
@@ -77,11 +81,7 @@ export class ServerReportCommand
       ),
     ]);
     const messageEmbed = getSuccessMessageEmbed()
-      .setTitle(
-        `Server Report for the Current ${
-          timePeriod.charAt(0).toUpperCase() + timePeriod.slice(1)
-        }`,
-      )
+      .setTitle(`${addLy(capitalizeFirst(timePeriod))} Server Report`)
       .addFields([
         {
           name: 'Highest Win Rate',

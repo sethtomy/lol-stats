@@ -1,4 +1,4 @@
-import { UserReportDto } from '@sethtomy/report-client';
+import { UserReportDto } from '../user-report/user-report.dto';
 
 export class WinRateDto {
   public winRate: string;

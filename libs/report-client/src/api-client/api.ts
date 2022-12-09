@@ -107,6 +107,12 @@ export interface SummonerReportDto {
      * @memberof SummonerReportDto
      */
     'championReports': Array<ChampionReportDto>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof SummonerReportDto
+     */
+    'leagues': Array<object>;
 }
 /**
  * 
@@ -150,6 +156,18 @@ export interface UserReportDto {
      * @memberof UserReportDto
      */
     'championReports': Array<ChampionReportDto>;
+    /**
+     * 
+     * @type {object}
+     * @memberof UserReportDto
+     */
+    'highestSoloDuoLeague': object;
+    /**
+     * 
+     * @type {object}
+     * @memberof UserReportDto
+     */
+    'highestFlexLeague': object;
 }
 /**
  * 

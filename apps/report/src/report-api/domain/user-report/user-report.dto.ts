@@ -8,16 +8,16 @@ interface UserReportDtoOptions extends AbstractReportOptions {
   userName: string;
   summoners: string[];
   championReports: ChampionReportDto[];
-  highestSoloDuoLeague: LeagueDto;
-  highestFlexLeague: LeagueDto;
+  highestSoloDuoLeague?: LeagueDto;
+  highestFlexLeague?: LeagueDto;
 }
 
 export class UserReportDto extends AbstractReport {
   userName: string;
   summoners: string[];
   championReports: ChampionReportDto[];
-  highestSoloDuoLeague: LeagueDto;
-  highestFlexLeague: LeagueDto;
+  highestSoloDuoLeague?: LeagueDto;
+  highestFlexLeague?: LeagueDto;
 
   constructor(options: UserReportDtoOptions) {
     super(options);

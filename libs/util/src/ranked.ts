@@ -33,7 +33,10 @@ export const Rank = Object.freeze({
 
 export const RankOrder = [Rank.IV, Rank.III, Rank.II, Rank.I];
 
-export function compareRanks(leagueDtos: LeagueDto[]): LeagueDto {
+export function compareRanks(leagueDtos: LeagueDto[]): LeagueDto | undefined {
+  if (leagueDtos.length === 0) {
+    return;
+  }
   return leagueDtos.reduce((a, b) => {
     const aTier = TierRankOrder.indexOf(a.tier);
     const bTier = TierRankOrder.indexOf(b.tier);

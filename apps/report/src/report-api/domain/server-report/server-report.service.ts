@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ServerReportDto } from '../summoner-report/server-report.dto';
+import { ServerReportDto } from './server-report.dto';
 import { UserReportDto } from '../user-report/user-report.dto';
 
 @Injectable()
@@ -14,18 +14,23 @@ export class ServerReportService {
   }
 
   private getWinRate(userReportDto: UserReportDto) {
+    const rate = userReportDto.wins / userReportDto.totalGames;
+    if (Number.isNaN(rate)) {
+      return 0;
+    }
     return userReportDto.wins / userReportDto.totalGames;
   }
 
   private getHighestWinRate(userReports: UserReportDto[]): UserReportDto {
-    const userReport = userReports.reduce((a, b) => {
+    const eligibleUserReports = userReports.filter(
+      (userReport) => userReport.totalGames > 2,
+    );
+    const userReport = eligibleUserReports.reduce((a, b) => {
       const aWinRate = this.getWinRate(a);
       const bWinRate = this.getWinRate(b);
       // todo: Check how this behaves as users have less than 3 games
       if (aWinRate > bWinRate) {
-        if (a.totalGames > 2) {
-          return a;
-        }
+        return a;
       }
       return b;
     });
@@ -33,7 +38,10 @@ export class ServerReportService {
   }
 
   private getLowestWinRate(userReports: UserReportDto[]): UserReportDto {
-    const userReport = userReports.reduce((a, b) => {
+    const eligibleUserReports = userReports.filter(
+      (userReport) => userReport.totalGames > 2,
+    );
+    const userReport = eligibleUserReports.reduce((a, b) => {
       const aWinRate = this.getWinRate(a);
       const bWinRate = this.getWinRate(b);
       if (aWinRate < bWinRate) {
