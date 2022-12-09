@@ -3,6 +3,7 @@ import { SummonerReportInfraModule } from './report-api/infra/summoner-infra-rep
 import { ChampionReportModule } from './report-api/domain/champion-report/champion-report.module';
 import { UserReportInfraModule } from './report-api/infra/user-infra-report/user-report-infra.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ServerReportInfraModule } from './report-api/infra/server-report-infra/server-report-infra.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     SummonerReportInfraModule,
     ChampionReportModule,
     UserReportInfraModule,
+    ServerReportInfraModule,
   ],
   controllers: [],
   providers: [

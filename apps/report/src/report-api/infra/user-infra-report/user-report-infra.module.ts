@@ -15,5 +15,6 @@ import { HttpClientModule } from '@sethtomy/http-client';
   ],
   providers: [UserReportInfraService],
   controllers: [UserReportInfraController],
+  exports: [UserReportInfraService],
 })
 export class UserReportInfraModule {}
