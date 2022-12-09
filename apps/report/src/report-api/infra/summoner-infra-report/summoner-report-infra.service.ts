@@ -7,6 +7,7 @@ import { SummonerReportService } from '../../domain/summoner-report/summoner-rep
 import ChampionReportDto from '../../domain/champion-report/champion-report.dto';
 import {
   Configuration,
+  LeagueApi,
   MatchApi,
   ParticipantDto,
   SummonerApi,
@@ -18,6 +19,7 @@ import { HttpClientService } from '@sethtomy/http-client';
 export class SummonerReportInfraService extends AbstractReportService {
   private readonly summonerApi: SummonerApi;
   private readonly matchApi: MatchApi;
+  private readonly leagueApi: LeagueApi;
 
   constructor(
     private readonly championReportService: ChampionReportService,
@@ -37,6 +39,11 @@ export class SummonerReportInfraService extends AbstractReportService {
       riotProxyConfigService.RIOT_PROXY_BASE_PATH,
       httpClientService.axiosInstance,
     );
+    this.leagueApi = new LeagueApi(
+      config,
+      riotProxyConfigService.RIOT_PROXY_BASE_PATH,
+      httpClientService.axiosInstance,
+    );
   }
 
   public async getSummonerReportByPeriod(
@@ -46,7 +53,18 @@ export class SummonerReportInfraService extends AbstractReportService {
     const summonerRes = await this.summonerApi.summonerControllerGetByName(
       summonerName,
     );
-    const puuid = summonerRes.data.puuid;
+    const [leagueResponse, participantDTOS] = await Promise.all([
+      this.leagueApi.leagueControllerGetByName(summonerRes.data.id),
+      this.getParticipantDtos(summonerRes.data.puuid, timePeriod),
+    ]);
+    return this.summonerReportService.get(
+      summonerName,
+      participantDTOS,
+      leagueResponse.data,
+    );
+  }
+
+  private async getParticipantDtos(puuid: string, timePeriod: DateTimeUnit) {
     const matchRes = await this.matchApi.matchControllerGetByPuuid(
       puuid,
       timePeriod,
@@ -55,7 +73,7 @@ export class SummonerReportInfraService extends AbstractReportService {
       puuid,
       matchRes.data,
     );
-    return this.summonerReportService.get(summonerName, participantDTOS);
+    return participantDTOS;
   }
 
   @Get(':summonerName/champion/:championName/time-period/:timePeriod')

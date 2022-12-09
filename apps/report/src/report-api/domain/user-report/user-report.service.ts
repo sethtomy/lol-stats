@@ -3,6 +3,7 @@ import SummonerReportDto from '../../infra/summoner-infra-report/models/summoner
 import { UserReportDto } from './user-report.dto';
 import ChampionReportDto from '../champion-report/champion-report.dto';
 import { User } from '@sethtomy/user-client';
+import { compareRanks, QueueType } from '@sethtomy/util';
 
 function compare(a: ChampionReportDto, b: ChampionReportDto) {
   if (a.totalGames < b.totalGames) {
@@ -17,7 +18,23 @@ function compare(a: ChampionReportDto, b: ChampionReportDto) {
 @Injectable()
 export class UserReportService {
   public get(user: User, summonerReports: SummonerReportDto[]): UserReportDto {
+    const soloDuoLeagues = [];
+    const flexLeagues = [];
+    summonerReports.forEach((summonerReport) => {
+      summonerReport.leagues.forEach((league) => {
+        if (league.queueType === QueueType.SOLO_DUO) {
+          soloDuoLeagues.push(league);
+        }
+        if (league.queueType === QueueType.FLEX) {
+          flexLeagues.push(league);
+        }
+      });
+    });
+    const highestSoloDuoLeague = compareRanks(soloDuoLeagues);
+    const highestFlexLeague = compareRanks(flexLeagues);
     return new UserReportDto({
+      highestFlexLeague,
+      highestSoloDuoLeague,
       userName: user.discordUserId,
       summoners: user.summonerNames,
       wins: this.getWins(summonerReports),

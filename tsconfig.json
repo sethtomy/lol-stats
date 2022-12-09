@@ -47,6 +47,12 @@
       ],
       "@sethtomy/report-client/*": [
         "libs/report-client/src/*"
+      ],
+      "@sethtomy/util": [
+        "libs/util/src"
+      ],
+      "@sethtomy/util/*": [
+        "libs/util/src/*"
       ]
     }
   }

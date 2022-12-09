@@ -112,7 +112,8 @@
       "^@sethtomy/config(|/.*)$": "<rootDir>/libs/config/src/$1",
       "^@sethtomy/user-client(|/.*)$": "<rootDir>/libs/user-client/src/$1",
       "^@sethtomy/http-client(|/.*)$": "<rootDir>/libs/http-client/src/$1",
-      "^@sethtomy/report-client(|/.*)$": "<rootDir>/libs/report-client/src/$1"
+      "^@sethtomy/report-client(|/.*)$": "<rootDir>/libs/report-client/src/$1",
+      "^@sethtomy/util(|/.*)$": "<rootDir>/libs/util/src/$1"
     }
   }
 }

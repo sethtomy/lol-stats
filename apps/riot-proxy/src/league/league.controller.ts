@@ -8,8 +8,8 @@ import { LeagueDto } from './league.dto';
 export class LeagueController {
   constructor(private readonly leagueService: LeagueService) {}
 
-  @Get(':name')
-  public getByName(@Param('name') name: string): Promise<LeagueDto[]> {
-    return this.leagueService.getByName(name);
+  @Get(':id')
+  public getByName(@Param('id') id: string): Promise<LeagueDto[]> {
+    return this.leagueService.getByName(id);
   }
 }

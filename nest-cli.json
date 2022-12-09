@@ -101,6 +101,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/discord-bot/tsconfig.app.json"
       }
+    },
+    "util": {
+      "type": "library",
+      "root": "libs/util",
+      "entryFile": "index",
+      "sourceRoot": "libs/util/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/util/tsconfig.lib.json"
+      }
     }
   }
 }

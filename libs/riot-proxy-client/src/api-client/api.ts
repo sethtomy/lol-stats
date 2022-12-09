@@ -24,6 +24,37 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface LeagueDto
+ */
+export interface LeagueDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof LeagueDto
+     */
+    'queueType': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LeagueDto
+     */
+    'tier': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LeagueDto
+     */
+    'rank': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LeagueDto
+     */
+    'leaguePoints': number;
+}
+/**
+ * 
+ * @export
  * @interface MatchDto
  */
 export interface MatchDto {
@@ -805,7 +836,114 @@ export interface SummonerDto {
      * @memberof SummonerDto
      */
     'puuid': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummonerDto
+     */
+    'id': string;
 }
+
+/**
+ * LeagueApi - axios parameter creator
+ * @export
+ */
+export const LeagueApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        leagueControllerGetByName: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('leagueControllerGetByName', 'id', id)
+            const localVarPath = `/league/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * LeagueApi - functional programming interface
+ * @export
+ */
+export const LeagueApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LeagueApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async leagueControllerGetByName(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LeagueDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.leagueControllerGetByName(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * LeagueApi - factory interface
+ * @export
+ */
+export const LeagueApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LeagueApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        leagueControllerGetByName(id: string, options?: any): AxiosPromise<Array<LeagueDto>> {
+            return localVarFp.leagueControllerGetByName(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * LeagueApi - object-oriented interface
+ * @export
+ * @class LeagueApi
+ * @extends {BaseAPI}
+ */
+export class LeagueApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LeagueApi
+     */
+    public leagueControllerGetByName(id: string, options?: AxiosRequestConfig) {
+        return LeagueApiFp(this.configuration).leagueControllerGetByName(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * MatchApi - axios parameter creator
