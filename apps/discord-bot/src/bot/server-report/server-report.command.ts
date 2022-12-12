@@ -8,7 +8,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import {
   Configuration,
   ServerReportApi,
-  ServerReportDto,
+  UserReportDto,
 } from '@sethtomy/report-client';
 import { TransformPipe } from '@discord-nestjs/common';
 import { TransformedCommandExecutionContext } from '@discord-nestjs/core/dist/definitions/interfaces/transformed-command-execution-context';
@@ -20,7 +20,7 @@ import {
   getSuccessMessageEmbed,
   sendMessageEmbed,
 } from '../common/message-embed';
-import { addLy, capitalizeFirst } from '@sethtomy/util/string';
+import { addLy, capitalizeFirst, leagueToString } from '@sethtomy/util/string';
 
 @SubCommand({
   name: 'get',
@@ -68,30 +68,31 @@ export class ServerReportCommand
   }
 
   private async sendMessageEmbed(
-    userReport: ServerReportDto,
+    userReportDtos: UserReportDto[],
     executionContext: TransformedCommandExecutionContext,
     timePeriod: string,
   ) {
-    const [highestUser, lowestUser] = await Promise.all([
-      executionContext.interaction.client.users.fetch(
-        userReport.highestWinRate.userName,
-      ),
-      executionContext.interaction.client.users.fetch(
-        userReport.lowestWinRate.userName,
-      ),
-    ]);
+    await Promise.all(
+      userReportDtos.map(async (userReportDto) => {
+        const user = await executionContext.interaction.client.users.fetch(
+          userReportDto.userName,
+        );
+        userReportDto.userName = user.username;
+      }),
+    );
+    const fields = userReportDtos.map((userReportDto) => {
+      const leagueMessage = leagueToString(
+        userReportDto,
+        'highestSoloDuoLeague',
+      );
+      return {
+        name: `${userReportDto.userName}`,
+        value: `${userReportDto.winRate}, ${userReportDto.totalGames} games, ${leagueMessage}`,
+      };
+    });
     const messageEmbed = getSuccessMessageEmbed()
       .setTitle(`${addLy(capitalizeFirst(timePeriod))} Server Report`)
-      .addFields([
-        {
-          name: 'Highest Win Rate',
-          value: `${highestUser.username} ${userReport.highestWinRate.winRate}`,
-        },
-        {
-          name: 'Lowest Win Rate',
-          value: `${lowestUser.username} ${userReport.lowestWinRate.winRate}`,
-        },
-      ]);
+      .addFields(fields);
     sendMessageEmbed(executionContext.interaction, messageEmbed);
   }
 }

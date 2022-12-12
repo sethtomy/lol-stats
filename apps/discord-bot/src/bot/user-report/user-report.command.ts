@@ -22,6 +22,7 @@ import {
   getSuccessMessageEmbed,
   sendMessageEmbed,
 } from '../common/message-embed';
+import { leagueToString } from '@sethtomy/util/string';
 
 @SubCommand({
   name: 'get',
@@ -85,12 +86,9 @@ export class UserReportCommand
         value: `Win Rate ${championReport.winRate}, Wins ${championReport.wins}, Total Games ${championReport.totalGames}`,
       };
     });
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const soloDuoMessage = `${userReport.highestSoloDuoLeague?.tier} ${userReport.highestSoloDuoLeague?.rank} ${userReport.highestSoloDuoLeague?.leaguePoints}`;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const flexMessage = `${userReport.highestFlexLeague?.tier} ${userReport.highestFlexLeague?.rank} ${userReport.highestFlexLeague?.leaguePoints}`;
+
+    const soloDuoMessage = leagueToString(userReport, 'highestSoloDuoLeague');
+    const flexMessage = leagueToString(userReport, 'highestFlexLeague');
     const messageEmbed = getSuccessMessageEmbed()
       .setTitle(`User Report for ${discordUser.username}`)
       .addFields([

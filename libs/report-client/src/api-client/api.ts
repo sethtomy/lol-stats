@@ -55,25 +55,6 @@ export interface ChampionReportDto {
 /**
  * 
  * @export
- * @interface ServerReportDto
- */
-export interface ServerReportDto {
-    /**
-     * 
-     * @type {WinRateDto}
-     * @memberof ServerReportDto
-     */
-    'lowestWinRate': WinRateDto;
-    /**
-     * 
-     * @type {WinRateDto}
-     * @memberof ServerReportDto
-     */
-    'highestWinRate': WinRateDto;
-}
-/**
- * 
- * @export
  * @interface SummonerReportDto
  */
 export interface SummonerReportDto {
@@ -169,25 +150,6 @@ export interface UserReportDto {
      */
     'highestFlexLeague'?: object;
 }
-/**
- * 
- * @export
- * @interface WinRateDto
- */
-export interface WinRateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WinRateDto
-     */
-    'winRate': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WinRateDto
-     */
-    'userName': string;
-}
 
 /**
  * ServerReportApi - axios parameter creator
@@ -244,7 +206,7 @@ export const ServerReportApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async serverReportInfraControllerGet(timePeriod: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServerReportDto>> {
+        async serverReportInfraControllerGet(timePeriod: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserReportDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.serverReportInfraControllerGet(timePeriod, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -264,7 +226,7 @@ export const ServerReportApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        serverReportInfraControllerGet(timePeriod: string, options?: any): AxiosPromise<ServerReportDto> {
+        serverReportInfraControllerGet(timePeriod: string, options?: any): AxiosPromise<Array<UserReportDto>> {
             return localVarFp.serverReportInfraControllerGet(timePeriod, options).then((request) => request(axios, basePath));
         },
     };
