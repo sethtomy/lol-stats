@@ -18,7 +18,7 @@ import { DEFAULT_MESSAGE } from '../common/message';
 import { TimeReportDto } from '../common/time-report.dto';
 import {
   getSuccessMessageEmbed,
-  sendMessageEmbed,
+  sendMessageEmbedViaInteraction,
 } from '../common/message-embed';
 import { addLy, capitalizeFirst, leagueToString } from '@sethtomy/util/string';
 
@@ -93,6 +93,6 @@ export class ServerReportCommand
     const messageEmbed = getSuccessMessageEmbed()
       .setTitle(`${addLy(capitalizeFirst(timePeriod))} Server Report`)
       .addFields(fields);
-    sendMessageEmbed(executionContext.interaction, messageEmbed);
+    sendMessageEmbedViaInteraction(executionContext.interaction, messageEmbed);
   }
 }

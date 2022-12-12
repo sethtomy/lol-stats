@@ -20,7 +20,7 @@ import { TimeReportDto } from '../common/time-report.dto';
 import { AbstractUserCommand } from '../common/abstract-user-command';
 import {
   getSuccessMessageEmbed,
-  sendMessageEmbed,
+  sendMessageEmbedViaInteraction,
 } from '../common/message-embed';
 import { leagueToString } from '@sethtomy/util/string';
 
@@ -99,6 +99,6 @@ export class UserReportCommand
         { name: 'Highest Flex Rank', value: flexMessage },
         ...fields,
       ]);
-    sendMessageEmbed(executionContext.interaction, messageEmbed);
+    sendMessageEmbedViaInteraction(executionContext.interaction, messageEmbed);
   }
 }

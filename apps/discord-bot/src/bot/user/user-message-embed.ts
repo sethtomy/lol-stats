@@ -1,6 +1,6 @@
 import {
   getSuccessMessageEmbed,
-  sendMessageEmbed,
+  sendMessageEmbedViaInteraction,
 } from '../common/message-embed';
 import { CommandInteraction, EmbedBuilder, User } from 'discord.js';
 
@@ -24,5 +24,5 @@ export function sendUserMessageEmbed(
   summonerNames: string[],
 ): void {
   const messageEmbed = getUserMessageEmbed(user, summonerNames);
-  sendMessageEmbed(interaction, messageEmbed);
+  sendMessageEmbedViaInteraction(interaction, messageEmbed);
 }

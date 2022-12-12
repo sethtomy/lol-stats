@@ -10,6 +10,7 @@ import { AddSummonerCommand } from './user/add-summoner.command';
 import { RemoveSummonerCommand } from './user/remove-summoner.command';
 import { UserReportCommand } from './user-report/user-report.command';
 import { ServerReportCommand } from './server-report/server-report.command';
+import { CronService } from './cron/cron.service';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ServerReportCommand } from './server-report/server-report.command';
     RemoveSummonerCommand,
     UserReportCommand,
     ServerReportCommand,
+    CronService,
   ],
 })
 export class BotModule {}

@@ -1,4 +1,4 @@
-import { CommandInteraction, EmbedBuilder } from 'discord.js';
+import { CacheTypeReducer, CommandInteraction, EmbedBuilder } from 'discord.js';
 
 export function getSuccessMessageEmbed(): EmbedBuilder {
   return new EmbedBuilder().setColor('#00FF00');
@@ -13,10 +13,17 @@ export function sendErrorMessageEmbed(
   description: string,
 ): void {
   const messageEmbed = getErrorMessageEmbed().setDescription(description);
-  sendMessageEmbed(interaction, messageEmbed);
+  sendMessageEmbedViaInteraction(interaction, messageEmbed);
 }
 
 export function sendMessageEmbed(
+  channel: CacheTypeReducer<any, any>,
+  messageEmbed: EmbedBuilder,
+) {
+  channel.send({ embeds: [messageEmbed] });
+}
+
+export function sendMessageEmbedViaInteraction(
   interaction: CommandInteraction,
   messageEmbed: EmbedBuilder,
 ): void {
