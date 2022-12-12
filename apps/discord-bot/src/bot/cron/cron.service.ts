@@ -64,12 +64,12 @@ export class CronService {
   //   const TIME_PERIOD = 'month';
   //   await this.foo(TIME_PERIOD);
   // }
-  //
-  // @Cron('30 18 28 2 *')
-  // async twentyEightCron() {
-  //   const TIME_PERIOD = 'month';
-  //   await this.foo(TIME_PERIOD);
-  // }
+
+  @Cron('30 18 28 * *')
+  async twentyEightCron() {
+    const TIME_PERIOD = 'month';
+    await this.foo(TIME_PERIOD);
+  }
 
   private async foo(timePeriod: 'day' | 'week' | 'month') {
     this.logger.log(`Handling ${timePeriod} Cron Job...`);
