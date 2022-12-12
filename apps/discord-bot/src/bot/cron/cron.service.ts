@@ -53,23 +53,23 @@ export class CronService {
     await this.foo(TIME_PERIOD);
   }
 
-  @Cron('30 18 30 4,6,9,11 *')
-  async thirtyCron() {
-    const TIME_PERIOD = 'month';
-    await this.foo(TIME_PERIOD);
-  }
-
-  @Cron('30 18 31 1,3,5,7,8,10,12 *')
-  async thirtyOneCron() {
-    const TIME_PERIOD = 'month';
-    await this.foo(TIME_PERIOD);
-  }
-
-  @Cron('30 18 28 2 *')
-  async twentyEightCron() {
-    const TIME_PERIOD = 'month';
-    await this.foo(TIME_PERIOD);
-  }
+  // @Cron('30 18 30 4,6,9,11 *')
+  // async thirtyCron() {
+  //   const TIME_PERIOD = 'month';
+  //   await this.foo(TIME_PERIOD);
+  // }
+  //
+  // @Cron('30 18 31 1,3,5,7,8,10,12 *')
+  // async thirtyOneCron() {
+  //   const TIME_PERIOD = 'month';
+  //   await this.foo(TIME_PERIOD);
+  // }
+  //
+  // @Cron('30 18 28 2 *')
+  // async twentyEightCron() {
+  //   const TIME_PERIOD = 'month';
+  //   await this.foo(TIME_PERIOD);
+  // }
 
   private async foo(timePeriod: 'day' | 'week' | 'month') {
     this.logger.log(`Handling ${timePeriod} Cron Job...`);
