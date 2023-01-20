@@ -22,7 +22,7 @@ import {
   getSuccessMessageEmbed,
   sendMessageEmbedViaInteraction,
 } from '../common/message-embed';
-import { leagueToString } from '@sethtomy/util/string';
+import { addLy, capitalizeFirst, leagueToString } from '@sethtomy/util/string';
 
 @SubCommand({
   name: 'get',
@@ -69,6 +69,7 @@ export class UserReportCommand
       dto.timePeriod,
     );
     await this.sendMessageEmbed(
+      dto,
       discordUser as User,
       res.data,
       executionContext,
@@ -76,29 +77,41 @@ export class UserReportCommand
   }
 
   private async sendMessageEmbed(
+    dto: TimeReportDto,
     discordUser: User,
     userReport: UserReportDto,
     executionContext: TransformedCommandExecutionContext,
   ) {
-    const fields = userReport.championReports.map((championReport) => {
+    const fields = userReport.championReports.map((championReport, index) => {
       return {
         name: championReport.championName,
         value: `Win Rate ${championReport.winRate}, Wins ${championReport.wins}, Total Games ${championReport.totalGames}`,
+        inline: index !== 0,
       };
     });
 
     const soloDuoMessage = leagueToString(userReport, 'highestSoloDuoLeague');
     const flexMessage = leagueToString(userReport, 'highestFlexLeague');
     const messageEmbed = getSuccessMessageEmbed()
-      .setTitle(`User Report for ${discordUser.username}`)
+      .setTitle(
+        `${addLy(capitalizeFirst(dto.timePeriod))} User Report for ${
+          discordUser.username
+        }`,
+      )
       .addFields([
-        { name: 'Win Rate', value: userReport.winRate },
-        { name: 'Wins', value: userReport.wins.toString() },
-        { name: 'Total Games', value: userReport.totalGames.toString() },
-        { name: 'Highest Solo/Duo Rank', value: soloDuoMessage },
-        { name: 'Highest Flex Rank', value: flexMessage },
-        ...fields,
-      ]);
+        { name: 'Win Rate', value: userReport.winRate, inline: true },
+        { name: 'Wins', value: userReport.wins.toString(), inline: true },
+        {
+          name: 'Total Games',
+          value: userReport.totalGames.toString(),
+          inline: true,
+        },
+      ])
+      .addFields([
+        { name: 'Highest Solo/Duo Rank', value: soloDuoMessage, inline: true },
+        { name: 'Highest Flex Rank', value: flexMessage, inline: true },
+      ])
+      .addFields([...fields]);
     sendMessageEmbedViaInteraction(executionContext.interaction, messageEmbed);
   }
 }
