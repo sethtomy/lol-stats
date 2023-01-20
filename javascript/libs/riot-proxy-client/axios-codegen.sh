@@ -1,5 +1,8 @@
 MSYS_NO_PATHCONV=1 \
-docker run --rm -v "${PWD}/src:/local/" openapitools/openapi-generator-cli generate \
-    -i http://host.docker.internal:3001/api-json/ \
+docker run --rm \
+    -v "${PWD}/src:/local/" \
+    -v "${PWD}/../../../openapi/riot-proxy-api.json:/local/riot-proxy-api.json" \
+    openapitools/openapi-generator-cli generate \
+    -i /local/riot-proxy-api.json \
     -g typescript-axios \
     -o /local/api-client
