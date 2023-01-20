@@ -5,6 +5,9 @@ export function capitalizeFirst(str: string): string {
 }
 
 export function addLy(str: string): string {
+  if (str.toLowerCase() === 'day') {
+    str = str.replace('y', 'i');
+  }
   return str + 'ly';
 }
 
@@ -12,7 +15,11 @@ export function leagueToString(
   userReport: UserReportDto,
   league: 'highestFlexLeague' | 'highestSoloDuoLeague',
 ) {
+  const currentLeague = userReport[league];
+  if (!currentLeague) {
+    return 'UNRANKED';
+  }
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return `${userReport[league]?.tier} ${userReport[league]?.rank} ${userReport[league]?.leaguePoints}`;
+  return `${currentLeague?.tier} ${currentLeague?.rank} ${currentLeague?.leaguePoints}`;
 }
