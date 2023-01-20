@@ -1,4 +1,4 @@
-import { Configuration, UserApi } from '../../../../libs/user-client/src';
+import { Configuration, UserApi } from '@sethtomy/user-client';
 import { Config } from '../config';
 import { randomUUID } from 'crypto';
 import {

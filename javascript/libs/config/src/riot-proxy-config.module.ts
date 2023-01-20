@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { RiotProxyConfigService } from '@sethtomy/config/riot-proxy-config.service';
+import { RiotProxyConfigService } from './riot-proxy-config.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({

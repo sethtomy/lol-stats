@@ -12,7 +12,7 @@
     "build:report": "nest build report",
     "build:discord-bot": "nest build discord-bot",
     "build:user": "nest build user",
-    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
+    "format": "prettier --write \\\"javascript/apps/**/*.ts\\\" \\\"libs/**/*.ts\\\"",
     "start:riot-proxy": "nest start riot-proxy",
     "start:user": "nest start user",
     "start:discord-bot": "nest start discord-bot",
@@ -35,7 +35,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/lol-stats/test/jest-e2e.json"
+    "test:e2e": "jest --config apps/lol-stats/test/jest-e2e.json"
   },
   "dependencies": {
     "@discord-nestjs/common": "^4.0.8",

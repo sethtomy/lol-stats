@@ -3,8 +3,9 @@
   "compilerOptions": {
     "declaration": false,
     "outDir": "../../dist/apps/discord-bot",
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"],
+  "exclude": ["node_modules", "dist", "test",
+    "**/*spec.ts"]
 }

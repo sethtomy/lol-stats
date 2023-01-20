@@ -3,7 +3,7 @@ import { SummonerReportInfraService } from '../summoner-infra-report/summoner-re
 import { DateTimeUnit } from 'luxon';
 import { UserReportService } from '../../domain/user-report/user-report.service';
 import { Configuration, UserApi } from '@sethtomy/user-client';
-import { UserConfigService } from '@sethtomy/config/user-config.service';
+import { UserConfigService } from '@sethtomy/config';
 import { HttpClientService } from '@sethtomy/http-client';
 import { UserReportDto } from '../../domain/user-report/user-report.dto';
 

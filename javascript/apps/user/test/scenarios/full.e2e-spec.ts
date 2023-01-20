@@ -3,7 +3,7 @@ import {
   Configuration,
   SummonerApi,
   UserApi,
-} from '../../../../libs/user-client/src';
+} from '@sethtomy/user-client';
 import {
   getCreateUserDto,
   getDiscordUserId,
