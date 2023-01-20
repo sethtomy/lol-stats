@@ -14,6 +14,6 @@ export async function writeSwaggerToFile(
     logger.log(`Successfully wrote Open API Spec to ${path}`);
   } catch (error) {
     // Eat error
-    console.warn(error);
+    logger.warn(error);
   }
 }
