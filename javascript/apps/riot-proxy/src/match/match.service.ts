@@ -19,7 +19,7 @@ export class MatchService {
     period: DateTimeUnit,
   ): Promise<string[]> {
     // todo: add endTime?
-    const start = DateTime.local().startOf(period).toSeconds();
+    const start = DateTime.utc().minus({ hour: 5 }).startOf(period).toSeconds(); // EST
     const matchIds = await this.riotMatchService.getByPuuid(puuid, start);
     this.logger.log(`Successfully got matchIds for ${puuid}`);
     return matchIds;
