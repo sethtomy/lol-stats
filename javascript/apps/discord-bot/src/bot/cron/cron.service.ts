@@ -41,41 +41,32 @@ export class CronService {
   /**
    * @todo Figure out why the data is wiping
    */
-  @Cron('30 18 * * *')
+  @Cron('30 23 * * *')
   async dailyCron() {
     const TIME_PERIOD = 'day';
-    await this.foo(TIME_PERIOD);
+    await this.sendServerReport(TIME_PERIOD);
   }
 
-  @Cron('30 18 * * 0')
+  @Cron('30 23 * * 0')
   async weeklyCron() {
     const TIME_PERIOD = 'week';
-    await this.foo(TIME_PERIOD);
+    await this.sendServerReport(TIME_PERIOD);
   }
 
-  // @Cron('30 18 30 4,6,9,11 *')
-  // async thirtyCron() {
-  //   const TIME_PERIOD = 'month';
-  //   await this.foo(TIME_PERIOD);
-  // }
-  //
-  // @Cron('30 18 31 1,3,5,7,8,10,12 *')
-  // async thirtyOneCron() {
-  //   const TIME_PERIOD = 'month';
-  //   await this.foo(TIME_PERIOD);
-  // }
-
-  @Cron('30 18 28 * *')
+  /**
+   * @todo Add riot proxy support for "previous" day/week/month
+   */
+  @Cron('30 23 28 * *')
   async twentyEightCron() {
     const TIME_PERIOD = 'month';
-    await this.foo(TIME_PERIOD);
+    await this.sendServerReport(TIME_PERIOD);
   }
 
-  private async foo(timePeriod: 'day' | 'week' | 'month') {
+  private async sendServerReport(timePeriod: 'day' | 'week' | 'month') {
     this.logger.log(`Handling ${timePeriod} Cron Job...`);
     const channel = this.client.channels.cache.get(this.LEAGUE_CHANNEL_ID);
     const res = await this.serverReportApi.serverReportInfraControllerGet(
-      'month',
+      timePeriod,
     );
     await this.sendMessageEmbed(res.data, channel, timePeriod);
     this.logger.log(`Successfully handled ${timePeriod} Cron Job!`);
