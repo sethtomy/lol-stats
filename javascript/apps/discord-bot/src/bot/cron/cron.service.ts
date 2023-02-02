@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectDiscordClient } from '@discord-nestjs/core';
 import { Channel, Client } from 'discord.js';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronOptions } from '@nestjs/schedule';
 import {
   getSuccessMessageEmbed,
   sendMessageEmbed,
@@ -24,6 +24,8 @@ export class CronService {
   private readonly LEAGUE_CHANNEL_ID = '886588070869233675';
   private readonly serverReportApi: ServerReportApi;
 
+  private static CRON_OPTIONS: CronOptions = { timeZone: 'AMERICA/NEW_YORK' };
+
   constructor(
     @InjectDiscordClient()
     private readonly client: Client,
@@ -38,16 +40,13 @@ export class CronService {
     );
   }
 
-  /**
-   * @todo Figure out why the data is wiping
-   */
-  @Cron('30 23 * * *')
+  @Cron('30 23 * * *', CronService.CRON_OPTIONS)
   async dailyCron() {
     const TIME_PERIOD = 'day';
     await this.sendServerReport(TIME_PERIOD);
   }
 
-  @Cron('30 23 * * 0')
+  @Cron('30 23 * * 0', CronService.CRON_OPTIONS)
   async weeklyCron() {
     const TIME_PERIOD = 'week';
     await this.sendServerReport(TIME_PERIOD);
@@ -56,7 +55,7 @@ export class CronService {
   /**
    * @todo Add riot proxy support for "previous" day/week/month
    */
-  @Cron('30 23 28 * *')
+  @Cron('30 23 28 * *', CronService.CRON_OPTIONS)
   async twentyEightCron() {
     const TIME_PERIOD = 'month';
     await this.sendServerReport(TIME_PERIOD);
