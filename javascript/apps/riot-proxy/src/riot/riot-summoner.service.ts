@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class RiotSummonerService extends AbstractRiotCachedResourceService<RiotAPITypes.Summoner.SummonerDTO> {
-  private readonly logger: Logger = new Logger(RiotSummonerService.name);
+  protected readonly logger: Logger = new Logger(RiotSummonerService.name);
 
   constructor(
     private readonly riotClientService: RiotClientService,

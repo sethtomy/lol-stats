@@ -4,7 +4,8 @@ import { AbstractKeyValueEntity } from '../db/kev-value.entity';
 import * as QuickLRU from 'quick-lru';
 
 export abstract class AbstractRiotCachedResourceService<T> {
-  lru: QuickLRU<string, T>;
+  protected abstract readonly logger;
+  private readonly lru: QuickLRU<string, T>;
 
   protected constructor(
     private readonly repository: Repository<AbstractKeyValueEntity<T>>,
@@ -14,11 +15,15 @@ export abstract class AbstractRiotCachedResourceService<T> {
 
   private async getFromCache(id: string): Promise<T | undefined> {
     if (this.lru.has(id)) {
+      this.logger.debug(`Cache hit for ${id}!`);
       return this.lru.get(id);
     }
     const resource = await this.repository.findOneBy({ id });
     if (resource) {
+      this.logger.debug(`Database (remote cache) hit for ${id}!`);
       this.lru.set(id, resource.data);
+    } else {
+      this.logger.debug(`Complete cache miss for ${id}!`);
     }
     return resource?.data;
   }

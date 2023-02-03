@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
 import RiotClientService from './riot-client.service';
 import { AbstractRiotCachedResourceService } from './abstract-riot-cached-resource.service';
 import { RiotAPITypes } from '@fightmegg/riot-api';
@@ -10,6 +10,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class RiotMatchService extends AbstractRiotCachedResourceService<RiotAPITypes.MatchV5.MatchDTO> {
+  protected readonly logger: Logger = new Logger(RiotMatchService.name);
+
   /**
    * 100 is the max
    * @link https://developer.riotgames.com/apis#match-v5/GET_getMatchIdsByPUUID
