@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { MatchService } from './match.service';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { DateTimeUnit } from 'luxon';
-import { MatchDto } from './models/match.dto';
+import { MatchDto } from './dto/match.dto';
 
 @ApiTags('Match')
 @Controller('match')

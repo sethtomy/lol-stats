@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import { DateTime, DateTimeUnit } from 'luxon';
 import { RiotMatchService } from '../riot/riot-match.service';
-import { MatchDto } from './models/match.dto';
+import { MatchDto } from './dto/match.dto';
 
 @Injectable()
 /**

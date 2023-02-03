@@ -9,6 +9,10 @@ services:
       - '3001:3001'
     environment:
       RIOT_API_KEY: ${RIOT_API_KEY}
+      DATABASE__HOST: ep-flat-dream-475451.us-east-2.aws.neon.tech
+      DATABASE__USERNAME: sethtomy
+      DATABASE__PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE__DATABASE: riot-proxy
 
   postgres:
     image: postgres:14.5-alpine3.16

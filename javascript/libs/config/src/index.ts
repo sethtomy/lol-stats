@@ -1,3 +1,5 @@
+export * from './db';
+
 export * from './riot-proxy-config.module';
 export * from './riot-proxy-config.service';
 

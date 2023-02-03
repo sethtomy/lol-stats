@@ -4,6 +4,9 @@ import { AbstractRiotCachedResourceService } from './abstract-riot-cached-resour
 import { RiotAPITypes } from '@fightmegg/riot-api';
 import { PlatformId } from '@fightmegg/riot-rate-limiter';
 import MatchType = RiotAPITypes.MatchV5.MatchType;
+import { Repository } from 'typeorm';
+import { Match } from './db/match';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class RiotMatchService extends AbstractRiotCachedResourceService<RiotAPITypes.MatchV5.MatchDTO> {
@@ -13,8 +16,12 @@ export class RiotMatchService extends AbstractRiotCachedResourceService<RiotAPIT
    */
   private readonly DEFAULT_COUNT = 100;
 
-  constructor(private readonly riotClientService: RiotClientService) {
-    super();
+  constructor(
+    private readonly riotClientService: RiotClientService,
+    @InjectRepository(Match)
+    matchRepository: Repository<Match>,
+  ) {
+    super(matchRepository);
   }
 
   /**
