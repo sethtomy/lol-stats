@@ -72,14 +72,14 @@ export class ServerReportCommand
     executionContext: TransformedCommandExecutionContext,
     timePeriod: string,
   ) {
-    await Promise.all(
-      userReportDtos.map(async (userReportDto) => {
-        const user = await executionContext.interaction.client.users.fetch(
-          userReportDto.userName,
-        );
-        userReportDto.userName = user.username;
-      }),
-    );
+    const guild = await executionContext.interaction.guild.fetch();
+    userReportDtos = userReportDtos.filter((userReportDto) => {
+      const user = guild.members.cache.get(userReportDto.userName);
+      if (user) {
+        userReportDto.userName = user.displayName;
+      }
+      return !!user;
+    });
     const fields = userReportDtos.map((userReportDto) => {
       const leagueMessage = leagueToString(
         userReportDto,
