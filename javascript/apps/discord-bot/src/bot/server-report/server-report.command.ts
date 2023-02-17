@@ -73,10 +73,11 @@ export class ServerReportCommand
     timePeriod: string,
   ) {
     const guild = await executionContext.interaction.guild.fetch();
+    const guildMembers = await guild.members.fetch();
     userReportDtos = userReportDtos.filter((userReportDto) => {
-      const user = guild.members.cache.get(userReportDto.userName);
+      const user = guildMembers.get(userReportDto.userName);
       if (user) {
-        userReportDto.userName = user.user.username;
+        userReportDto.userName = user.displayName;
       }
       return !!user;
     });
