@@ -76,7 +76,7 @@ export class ServerReportCommand
     userReportDtos = userReportDtos.filter((userReportDto) => {
       const user = guild.members.cache.get(userReportDto.userName);
       if (user) {
-        userReportDto.userName = user.displayName;
+        userReportDto.userName = user.user.username;
       }
       return !!user;
     });
