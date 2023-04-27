@@ -21,7 +21,7 @@ import { addLy, capitalizeFirst, leagueToString } from '@sethtomy/util/string';
 @Injectable()
 export class CronService {
   private readonly logger = new Logger(CronService.name);
-  private readonly LEAGUE_CHANNEL_ID = '886588070869233675';
+  private readonly LEAGUE_CHANNEL_ID = '1101194391596580987';
   private readonly serverReportApi: ServerReportApi;
 
   private static CRON_OPTIONS: CronOptions = { timeZone: 'AMERICA/NEW_YORK' };
